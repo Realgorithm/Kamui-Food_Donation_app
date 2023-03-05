@@ -2,6 +2,7 @@ package com.kamui.fooddonation.volunteer
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+<<<<<<< HEAD
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,16 @@ import com.kamui.fooddonation.ngo.RecordFragment
 import com.kamui.fooddonation.restaurant.AccountFragment
 
 class VHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+=======
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+import com.kamui.fooddonation.R
+
+class VHomePage : AppCompatActivity() {
+>>>>>>> 80a599b (day33 commit)
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -25,6 +36,7 @@ class VHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_v_home_page)
 
+<<<<<<< HEAD
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
 
@@ -115,5 +127,40 @@ class VHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+=======
+        // Set the title of the activity
+        supportActionBar?.title = "Hello Volunteer"
+
+        // Set up the ViewPager to display the restaurant menu items
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        viewPager.adapter = ViewPagerAdapterVolunteer(this)
+
+        // Set up the BottomNavigationView to switch between menu item categories
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    viewPager.currentItem = 0
+                    true
+                }
+                R.id.track ->{
+                    viewPager.currentItem = 1
+                    true
+                }
+                R.id.acc -> {
+                    viewPager.currentItem = 2
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Set up a callback to update the BottomNavigationView when the ViewPager is swiped
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                bottomNavigationView.menu.getItem(position).isChecked = true
+            }
+        })
+>>>>>>> 80a599b (day33 commit)
     }
 }
