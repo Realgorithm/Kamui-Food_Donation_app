@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "580879958556",
+    "project_id": "kamui---food-donation-app",
+    "storage_bucket": "kamui---food-donation-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580879958556:android:84a06c8bbe8634a63415d9",
+        "android_client_info": {
+          "package_name": "com.kamui.fooddonation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580879958556-evb00h7vo73s4m288s2bfu7cmdkri66b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPDKDMKFCr1R9WGwL4z-fuG7z3iBzAzl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580879958556-evb00h7vo73s4m288s2bfu7cmdkri66b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

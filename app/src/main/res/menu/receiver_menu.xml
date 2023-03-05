@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_ngo"
+            android:title="NGO"
+            android:icon="@drawable/mercy_04"
+            android:checkable="true"
+            android:background="@color/blue"/>
+        <item
+            android:id="@+id/nav_restaurant"
+            android:title="Restaurant"
+            android:icon="@drawable/mercy_04"/>
+        <item
+            android:id="@+id/nav_admin"
+            android:title="Admin"
+            android:icon="@drawable/mercy_04"/>
+    </group>
+
+    <item android:title="My Account">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:title="Profile"
+                android:icon="@drawable/mercy_04"/>
+<!--            <item-->
+<!--                android:id="@+id/nav_settings"-->
+<!--                android:title="Settings" />-->
+        </menu>
+    </item>
+
+    <item android:id="@+id/nav_logout" android:title="Logout" />
+
+</menu>
+<!--<menu xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item android:id="@+id/nav_ngo"-->
+<!--        android:title="Home"-->
+<!--        android:icon="@drawable/mercy_04"-->
+<!--        android:checkable="true"-->
+<!--        android:background="@drawable/menu_selector" />-->
+<!--    <item android:id="@+id/nav_restaurant"-->
+<!--        android:title="Home"-->
+<!--        android:icon="@drawable/mercy_04"-->
+<!--        android:checkable="true"-->
+<!--        android:background="@drawable/menu_selector" />-->
+<!--    <item android:id="@+id/nav_profile"-->
+<!--        android:title="Profile"-->
+<!--        android:icon="@drawable/mercy_04"-->
+<!--        android:checkable="true"-->
+<!--        android:background="@drawable/menu_selector" />-->
+<!--    <item android:id="@+id/nav_settings"-->
+<!--        android:title="Settings"-->
+<!--        android:icon="@drawable/mercy_04"-->
+<!--        android:checkable="true"-->
+<!--        android:background="@drawable/menu_selector" />-->
+<!--    <item android:id="@+id/nav_logout"-->
+<!--        android:title="LogOut"-->
+<!--        android:checkable="true"-->
+<!--        android:background="@drawable/menu_selector" />-->
+<!--</menu>-->

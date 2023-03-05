@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.KamuiFoodDonationApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:fontFamily">@font/montserratregular</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/olive_700</item>
+        <item name="colorPrimaryVariant">@color/olive_200</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/pink_200</item>
+        <item name="colorSecondaryVariant">@color/pink_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/green_700</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">@font/montserratregular</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <style name="AppTheme.OnboardScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/montserratalternatesextrabold</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <style name="AppTheme.loginScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">@font/montserratalternatesbolditalic</item>
+    </style>
+    <style name="AppTheme.sliderScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">@font/montserratregular</item>
+    </style>
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+</resources>

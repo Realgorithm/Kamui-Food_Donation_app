@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyButtonTheme">
+        <item name="colorButtonNormal">@color/yellow_200</item>
+    </style>
+    <style name="MyNavigationViewStyle" parent="Widget.Design.NavigationView">
+        <item name="android:textAppearance">@style/MyNavigationItemTextAppearance</item>
+    </style>
+
+    <style name="MyNavigationItemTextAppearance" parent="@android:style/TextAppearance.Widget">
+        <item name="android:textColor">@color/green_700</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserratalternatesblackitalic</item>
+        <item name="android:textColorHighlight">@color/yellow</item> <!-- this is the important line -->
+    </style>
+</resources>

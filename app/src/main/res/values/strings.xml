@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Kamui - Food Donation app</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="restaurant_signup">Join Us</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="contact_person">Manager Name</string>
+    <string name="phone_number">1234567890</string>
+    <string name="email">abc@example.com</string>
+    <string name="password">password</string>
+    <string name="signup_button">join us</string>
+    <string name="restaurant_title">Make a Difference</string>
+    <string name="signin_button">Sign In</string>
+    <string name="restaurant_signin">Welcome Back</string>
+    <string name="open">op</string>
+    <string name="close">cs</string>
+    <string-array name="dropdown_options">
+        <item>Option 1</item>
+        <item>Option 2</item>
+        <item>Option 3</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+</resources>

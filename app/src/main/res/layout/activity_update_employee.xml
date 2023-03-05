@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ngo.AddEmployee"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="12dp">
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="180dp"
+        android:id="@+id/imageView"
+        android:scaleType="fitXY"
+        android:contentDescription="TODO" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/select_image_button"
+        android:text="Add Image"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/tv_food_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="8dp"
+        android:text="Employee Name"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/et_food_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:inputType="text"
+        android:hint="Employee Name"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/tv_feed_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="Contact Number"
+        android:visibility="gone"/>
+    <EditText
+        android:id="@+id/et_feed_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:inputType="number"
+        android:hint="Contact Number"
+        android:autofillHints=""/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:layout_margin="16dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/yellow_200"
+        android:text="Update" />
+
+</LinearLayout>

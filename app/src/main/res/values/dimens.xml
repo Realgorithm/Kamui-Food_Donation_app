@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_title_text_size">30sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!--        <dimen name="button1_x">@dimen/button1_cx</dimen>-->
+<!--        <dimen name="button1_y">@dimen/button1_cy</dimen>-->
+<!--        <dimen name="button2_x">@dimen/button2_cx</dimen>-->
+<!--        <dimen name="button2_y">@dimen/button2_cy</dimen>-->
+<!--        <dimen name="button3_x">@dimen/button3_cx</dimen>-->
+<!--        <dimen name="button3_y">@dimen/button3_cy</dimen>-->
+<!--        <dimen name="button4_x">@dimen/button4_cx</dimen>-->
+<!--        <dimen name="button4_y">@dimen/button4_cy</dimen>-->
+<!--        <dimen name="button5_x">@dimen/button5_cx</dimen>-->
+<!--    <dimen name="button5_y">@dimen/button5_cy</dimen>-->
+
+    </resources>

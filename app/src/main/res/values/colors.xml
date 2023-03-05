@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink_200">#F4ECCE</color>
+    <color name="red_200">#E80909</color>
+    <color name="olive_200">#CADD8D</color>
+    <color name="olive_700">#ABBF6B</color>
+    <color name="yellow_200">#FCC64C</color>
+    <color name="green_700">#232F1A</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#2160D4</color>
+    <color name="yellow">#FFD21D</color>
+</resources>
