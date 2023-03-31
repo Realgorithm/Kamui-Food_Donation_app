@@ -33,5 +33,4 @@
         android:background="@color/pink_200"
         />
 
-
 </androidx.drawerlayout.widget.DrawerLayout>

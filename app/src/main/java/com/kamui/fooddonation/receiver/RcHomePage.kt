@@ -69,12 +69,12 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         drawerLayout.closeDrawers()
 
         when(item.itemId){
-            R.id.nav_ngo -> {
+            R.id.nav_home -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.content_frame, RcNgoFragment())
                     .commit()
             }
-            R.id.nav_restaurant -> {
+            R.id.nav_recieved -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.content_frame, RcRestaurantFragment())
                     .commit()

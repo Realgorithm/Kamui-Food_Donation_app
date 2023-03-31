@@ -26,7 +26,14 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/donation_address"
+            android:id="@+id/donation_pickup_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donation Address"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/donation_dest_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Donation Address"
@@ -52,5 +59,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Claim" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <Button
+        android:id="@+id/deliver_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deliver" />
+
+        <Button
+            android:id="@+id/track_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Track" />
+    </LinearLayout>
 
 </LinearLayout>

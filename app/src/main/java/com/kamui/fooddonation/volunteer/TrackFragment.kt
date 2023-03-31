@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kamui.fooddonation.Donation
-import com.kamui.fooddonation.DonationAdapter
 import com.kamui.fooddonation.R
 
 class TrackFragment : Fragment() {
@@ -25,25 +23,40 @@ class TrackFragment : Fragment() {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_track, container, false)
 
-        // Retrieve the claimed donation list passed from the VolHomeFragment
-        val claimedDonationsList = arguments?.getParcelableArrayList<Donation>("donationsList")
-
-        // If the list is not null, update the donationsList and notify the adapter
-        if (claimedDonationsList != null) {
-            donationsList.addAll(claimedDonationsList)
-            donationAdapter.notifyDataSetChanged()
-        }
-
         // Initialize the RecyclerView and the adapter
         recyclerView = view.findViewById(R.id.recycler_view)
-        donationAdapter = DonationAdapter(requireContext(), donationsList)
+        donationAdapter = DonationAdapter(requireContext(), donationsList,this)
 
         // Set the layout manager and the adapter for the RecyclerView
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = donationAdapter
-//        loadMyDonations()
+
+        // Load the donations from the server
+        loadMyDonations()
+
+        // Set the listener for the "Claim" button in the adapter
+        donationAdapter.setOnDeliverClickListener(object : DonationAdapter.OnDeliverClickListener {
+            override fun onDeliverClick(position: Int) {
+                // Get the selected donation
+                val selectedDonation = donationsList[position]
+
+                // Update the status of the donation to "claimed"
+                selectedDonation.status = "delivered"
+
+                donationAdapter.notifyItemChanged(position)
+
+                // Assign the task to the volunteer
+                assignTask(selectedDonation)
+
+            }
+        })
+
         return view
+    }
+
+    private fun assignTask(selectedDonation: Donation) {
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -52,8 +65,8 @@ class TrackFragment : Fragment() {
 
 
         // Add some dummy data for testing purposes
-        donationsList.add(Donation("Food", "John Doe", "restaurant","123 Main St", "claimed","Volunteer1" ))
-        donationsList.add(Donation("Toys", "Bob Johnson","volunteer", "789 Oak St", "claimed","Volunteer2"))
+        donationsList.add(Donation("Food", "John Doe", "restaurant","123 Main St","789 Oak St", "claimed","Volunteer1" ))
+        donationsList.add(Donation("Toys", "Bob Johnson","volunteer", "789 Oak St","123 Main St", "claimed","Volunteer2"))
 
         // Notify the adapter that the data has changed
         donationAdapter.notifyDataSetChanged()

@@ -1,12 +1,13 @@
-package com.kamui.fooddonation
+package com.kamui.fooddonation.volunteer
 
 import android.os.Parcel
 import android.os.Parcelable
 import kotlin.String as String
 
-class Donation(val title: String?, val donor: String?, val receiver: String?, val address: String?, var status: String?, var ClaimedBy: String? =""):Parcelable
+class Donation(val title: String?, val donor: String?, val receiver: String?, val pickupAddress: String?,val destAddress: String?, var status: String?, var ClaimedBy: String? =""):Parcelable
  {
   constructor(parcel: Parcel) : this(
+   parcel.readString(),
    parcel.readString(),
    parcel.readString(),
    parcel.readString(),
@@ -20,7 +21,8 @@ class Donation(val title: String?, val donor: String?, val receiver: String?, va
    parcel.writeString(title)
    parcel.writeString(donor)
    parcel.writeString(receiver)
-   parcel.writeString(address)
+   parcel.writeString(pickupAddress)
+   parcel.writeString(destAddress)
    parcel.writeString(status)
    parcel.writeString(ClaimedBy)
   }
