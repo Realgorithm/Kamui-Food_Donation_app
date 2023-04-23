@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,25 +8,20 @@
     <ImageView
         android:id="@+id/img_logo"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:src="@drawable/mobile_login_bro"
-        android:contentDescription="@string/app_name"/>
+        android:layout_height="250dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/mobile_login_bro" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/olive_700"
-            android:orientation="vertical"
-            android:padding="16dp">
-
+            android:paddingHorizontal="14dp"
+            >
             <TextView
                 android:id="@+id/tv_firstText"
                 android:layout_width="match_parent"
@@ -41,62 +36,703 @@
                 android:id="@+id/tv_second"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_firstText"
                 android:text="@string/restaurant_title"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="#000000"/>
 
+            <!-- Common input fields -->
             <EditText
-                android:id="@+id/et_restaurant_name"
+                android:id="@+id/full_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/name"
-                android:inputType="text"
-                android:autofillHints="" />
+                android:layout_below="@+id/tv_second"
+                android:hint="@string/full_name_hint"
+                android:inputType="textPersonName"
+                android:background="@drawable/borders"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints="Smith" />
 
             <EditText
-                android:id="@+id/et_phone_number"
+                android:id="@+id/email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone_number"
-                android:inputType="phone"
-                android:autofillHints="" />
-
-            <EditText
-                android:id="@+id/et_contact_person"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/address"
-                android:inputType="text"
-                android:autofillHints="" />
-            <EditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email"
+                android:layout_below="@+id/full_name_input"
+                android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
-                android:autofillHints="" />
+                android:background="@drawable/borders"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints="abc@email.com" />
 
             <EditText
-                android:id="@+id/et_password"
+                android:id="@+id/address_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
+                android:layout_below="@+id/email_input"
+                android:hint="@string/address"
+                android:background="@drawable/borders"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:inputType="textPostalAddress"
+                android:autofillHints="xyz road" />
+
+            <EditText
+                android:id="@+id/phone_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address_input"
+                android:hint="@string/phone_hint"
+                android:background="@drawable/borders"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:inputType="phone"
+                android:autofillHints="1234567890" />
+
+            <LinearLayout
+                android:id="@+id/input_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phone_input"
+                android:orientation="horizontal">
+
+                <!-- Admin input fields-->
+                <LinearLayout
+                    android:id="@+id/admin_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/admin_designation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/borders"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="Designtion"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/select_access_level"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/borders"
+                        android:textAlignment="center">
+
+                        <RadioGroup
+                            android:id="@+id/access_level_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_full_access"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Full Access"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_restricted"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Restricted Access"
+                                />
+                        </RadioGroup>
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <!-- Restaurant input fields -->
+                <LinearLayout
+                    android:id="@+id/restaurant_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="0dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/restaurant_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/restaurant_name_hint"
+                        android:background="@drawable/borders"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/Cuisine"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders">
+
+                        <RadioGroup
+                            android:id="@+id/res_cuisine_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_res_chinese"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Chinese"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_italian"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Italian"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_maxican"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Mexican"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_indian"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Indian"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_japanese"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Japanese"
+                                />
+
+                        </RadioGroup>
+                    </HorizontalScrollView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/food_type"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders">
+
+                        <RadioGroup
+                            android:id="@+id/res_food_type_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_res_perishable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perishable"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_nonperishable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Non-Perishable"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_cooked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Cooked meals"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_leftover"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Leftover food"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_bakery"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Bakery items"
+                                />
+
+                        </RadioGroup>
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/ngo_pickup_time"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders">
+
+                        <RadioGroup
+                            android:id="@+id/res_food_pickup_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_res_anytime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Anytime"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_morning"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Morning"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_afternoon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Afternoon"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_evening"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Evening"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_res_night"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Night"
+                                />
+
+                        </RadioGroup>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+                <!-- NGO input fields -->
+                <LinearLayout
+                    android:id="@+id/ngo_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/ngo_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ngo_name_hint"
+                        android:background="@drawable/borders"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/ngo_Donation_type"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders">
+
+                        <RadioGroup
+                            android:id="@+id/ngo_food_type_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_perishable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perishable"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_nonperishable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Non-Perishable"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_cooked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Cooked meals"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_leftover"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Leftover food"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_bakery"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Bakery items"
+                                />
+
+                        </RadioGroup>
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/ngo_organization_type"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/borders"
+                        android:textAlignment="center">
+
+                    <RadioGroup
+                        android:id="@+id/ngo_organization_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_non_profit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Non Profit"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_community"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Community"
+                            />
+                        <RadioButton
+                            android:id="@+id/faith_based"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Faith-based"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_government"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Government"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_international"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="International"
+                            />
+
+                    </RadioGroup>
+                    </HorizontalScrollView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Food Pickup"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders"
+                        >
+
+                        <RadioGroup
+                            android:id="@+id/ngo_food_pickup_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_anytime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Anytime"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_morning"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Morning"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_afternoon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Afternoon"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_evening"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Evening"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_night"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Night"
+                                />
+
+                        </RadioGroup>
+                    </HorizontalScrollView>
+                    <EditText
+                        android:id="@+id/ngo_registration_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:background="@drawable/borders"
+                        android:hint="NGO's tax ID or registration number"/>
+
+                </LinearLayout>
+
+                <!-- Receiver input fields -->
+                <LinearLayout
+                    android:id="@+id/receiver_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/rev_pickup_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ngo_pickup_time"
+                        android:background="@drawable/borders"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:inputType="text" />
+
+                </LinearLayout>
+
+                <!-- Volunteer input fields -->
+                <LinearLayout
+                    android:id="@+id/volunteer_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/vol_availability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Availability"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders">
+
+                    <RadioGroup
+                        android:id="@+id/vol_availability_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_weekdays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Weekdays (Monday-Friday)"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_weekends"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Weekends (Saturday-Sunday)"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_vol_evening"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Evenings (5pm-8pm)"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_vol_morning"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Mornings (9am-12pm)"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_vol_afternoon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Afternoons (1pm-4pm)"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_flexible"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Flexible"
+                            />
+
+                    </RadioGroup>
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:id="@+id/vol_pref"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Preferred Type of Volunteering Opportunity"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/borders">
+
+                        <RadioGroup
+                            android:id="@+id/vol_pref_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radio_event"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Event setup and cleanup"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_food_prep"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Food preparation and cooking"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_serving"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Serving food and drinks"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_donation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Donation sorting and packaging"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_fundraising"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Fundraising and outreach"
+                                />
+                            <RadioButton
+                                android:id="@+id/radio_driving"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Driving and transportation"
+                                />
+
+                        </RadioGroup>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_fields"
+                android:hint="@string/password_hint"
                 android:inputType="textPassword"
-                android:autofillHints="" />
+                android:background="@drawable/borders"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints="23sd234s" />
+
+            <EditText
+                android:id="@+id/confirm_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password_input"
+                android:hint="@string/confirm_password_hint"
+                android:inputType="textPassword"
+                android:background="@drawable/borders"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints="23sd234s" />
+
+            <!-- Sign up button -->
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginVertical="30dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/confirm_password_input"
                 android:text="@string/signup_button"
-                android:textSize="20sp"
+                android:padding="8dp"
+                android:textSize="30sp"
                 android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="14dp"
                 android:backgroundTint="@color/yellow_200"/>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>

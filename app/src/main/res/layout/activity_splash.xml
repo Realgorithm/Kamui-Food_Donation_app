@@ -4,20 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".SplashActivity"
     tools:ignore="UseCompoundDrawables">
-    <ImageView
+
+    <VideoView
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:background="@drawable/splash_screen"
-        android:contentDescription="TODO" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="210dp"-->
+<!--        android:background="@drawable/splash_screen"-->
+<!--        android:contentDescription="TODO" />-->
     <TextView
         android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:gravity="center"
         android:textStyle="bold"
         android:textSize="@dimen/splash_title_text_size"/>
 

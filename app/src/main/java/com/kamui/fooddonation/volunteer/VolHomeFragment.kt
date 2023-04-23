@@ -63,17 +63,6 @@ class VolHomeFragment : Fragment() {
 
             }
         })
-
-        donationAdapter.setOnDeliverClickListener(object : DonationAdapter.OnDeliverClickListener {
-            override fun onDeliverClick(position: Int) {
-                val selectedDonation = donationsList[position]
-                selectedDonation.status = "delivered"
-                donationsList.removeAt(position)
-                donationAdapter.notifyItemRemoved(position)
-                donationAdapter.notifyItemChanged(position)
-            }
-        })
-
         return view
     }
 

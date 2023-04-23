@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_type_array">
+        <item>Perishable</item>
+        <item>Non-perishable</item>
+        <item>Vegetarian</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="food_pickup" >
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+    </string-array>
+    <string-array name="volunteer_availability_array" >
+        <item>Weekdays (Monday-Friday)</item>
+        <item>Weekends (Saturday-Sunday)</item>
+        <item>Evenings (5pm-8pm)</item>
+        <item>Mornings (9am-12pm)</item>
+        <item>Afternoons (1pm-4pm)</item>
+        <item>Flexible</item>
+    </string-array>
+    <string-array name="volunteer_preference_array" >
+        <item>Event setup and cleanup</item>
+        <item>Food preparation and cooking</item>
+        <item>Serving food and drinks</item>
+        <item>Donation sorting and packaging</item>
+        <item>Fundraising and outreach</item>
+        <item>Driving and transportation</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="admin_access_levels">
+        <item>Full Access</item>
+        <item>Restricted Access</item>
+    </string-array>
+    <string-array name="ngo_organization_type_array">
+        <item>Non-profit organization</item>
+        <item>Community-based organization</item>
+        <item>Faith-based organization</item>
+        <item>Government organization</item>
+        <item>International organization</item>
+    </string-array>
+    <string-array name="ngo_target_community_array">
+        <item>Children</item>
+        <item>Elderly</item>
+        <item>Homeless</item>
+        <item>Low-income households</item>
+        <item>People with disabilities</item>
+    </string-array>
+    <string-array name="ngo_food_donation_type_array">
+        <item>Non-perishable food items</item>
+        <item>Perishable food items</item>
+        <item>Cooked meals</item>
+        <item>Leftover food</item>
+        <item>Bakery items</item>
+    </string-array>
+    <string-array name="pickup_time_array">
+        <item>Anytime</item>
+        <item>Morning</item>
+        <item>Afternoon</item>
+        <item>Evening</item>
+        <item>Night</item>
+    </string-array>
+    <string-array name="cuisine_array">
+        <item>Chinese</item>
+        <item>Italian</item>
+        <item>Mexican</item>
+        <item>Indian</item>
+        <item>Japanese</item>
+    </string-array>
+</resources>

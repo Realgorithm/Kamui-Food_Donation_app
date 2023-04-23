@@ -2,9 +2,11 @@ package com.kamui.fooddonation
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.kamui.fooddonation.ngo.NloginPage
+import android.widget.VideoView
+import com.kamui.fooddonation.admin.AloginPage
 import com.kamui.fooddonation.slider.SliderActivity
 import kotlinx.coroutines.*
 
@@ -14,7 +16,20 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        val videoView = findViewById<VideoView>(R.id.videoView)
+        val videoUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.app_logo)
+        videoView.setVideoURI(videoUri)
 
+        videoView.setOnCompletionListener { startMainActivity(videoView) }
+
+        videoView.start()
+
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(4000)
+            startActivity(Intent(this@SplashActivity, SliderActivity::class.java))
+//            startActivity(Intent(this@SplashActivity, AloginPage::class.java))
+            finish()
+        }
 //        window.setFlags(
 //            WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //            WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -26,11 +41,9 @@ class SplashActivity : AppCompatActivity() {
 //            startActivity(Intent(this, AHomePage::class.java))
 //            finish()
 //        }, 2000)
-        GlobalScope.launch(Dispatchers.Main) {
-            delay(2000)
-            startActivity(Intent(this@SplashActivity, SliderActivity::class.java))
-//            startActivity(Intent(this@SplashActivity, NloginPage::class.java))
-            finish()
-        }
+    }
+
+    private fun startMainActivity(videoView: VideoView) {
+
     }
 }

@@ -8,11 +8,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.kamui.fooddonation.ngo.EmployeeFragment
-import com.kamui.fooddonation.ngo.NgoRequest
-import com.kamui.fooddonation.ngo.RRequest
-import com.kamui.fooddonation.ngo.RecordFragment
-import com.kamui.fooddonation.restaurant.AccountFragment
 
 class Example : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 

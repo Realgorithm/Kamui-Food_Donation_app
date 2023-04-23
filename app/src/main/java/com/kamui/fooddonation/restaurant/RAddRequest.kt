@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.volunteer.Donation
 
 class RAddRequest : AppCompatActivity() {
 
@@ -19,38 +21,51 @@ class RAddRequest : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set up the listeners for the food item edit text fields
-        val foodItemEditText = findViewById<EditText>(R.id.et_food_item)
-        val foodItemTextView = findViewById<TextView>(R.id.tv_food_item)
+        val foodTypeInput = findViewById<EditText>(R.id.foodTypeInput)
+        val foodTypeLabel = findViewById<TextView>(R.id.foodTypeLabel)
+        val quantityInput = findViewById<EditText>(R.id.quantityInput)
+        val quantityLabel = findViewById<TextView>(R.id.quantityLabel)
+        val expirationDateInput = findViewById<EditText>(R.id.expirationDateInput)
+        val expirationDateLabel = findViewById<TextView>(R.id.expirationDateLabel)
 
-        foodItemEditText.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            if (!hasFocus) {
-                // If the focus is lost, show the hint text and hide the label
-                foodItemEditText.hint = "Food items"
-                foodItemTextView.visibility = View.GONE;
-            } else {
-                // If the focus is gained, hide the hint text and show the label
-                foodItemEditText.hint = ""
-                foodItemTextView.visibility = View.VISIBLE;
+        val addDonationBtn = findViewById<Button>(R.id.uploadBtn)
+        addDonationBtn.setOnClickListener {
+            val foodType = foodTypeInput.text.toString()
+            val quantity = quantityInput.text.toString()
+            val expirationDate = expirationDateInput.text.toString()
+
+            // Create a new food donation object
+//            val donation = Donation(foodType, quantity, expirationDate)
+
+            foodTypeInput.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                if (!hasFocus) {
+                    // If the focus is lost, show the hint text and hide the label
+                    foodTypeInput.hint = "Food items"
+                    foodTypeLabel.visibility = View.GONE;
+                } else {
+                    // If the focus is gained, hide the hint text and show the label
+                    foodTypeInput.hint = ""
+                    foodTypeLabel.visibility = View.VISIBLE;
+                }
             }
-        }
 
-        // Set up the listeners for the feed count edit text fields
-        val feedCountEditText = findViewById<EditText>(R.id.et_feed_count)
-        val feedCountTextView = findViewById<TextView>(R.id.tv_feed_count)
+            // Set up the listeners for the feed count edit text fields
+            val feedCountEditText = findViewById<EditText>(R.id.et_feed_count)
+            val feedCountTextView = findViewById<TextView>(R.id.tv_feed_count)
 
-        feedCountEditText.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                // If the focus is gained, hide the hint text and show the label
-                feedCountEditText.hint = ""
-                feedCountTextView.visibility = View.VISIBLE;
-            } else {
-                // If the focus is lost, show the hint text and hide the label
-                feedCountEditText.hint = "Feed Counts"
-                feedCountTextView.visibility = View.GONE;
+            feedCountEditText.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    // If the focus is gained, hide the hint text and show the label
+                    feedCountEditText.hint = ""
+                    feedCountTextView.visibility = View.VISIBLE;
+                } else {
+                    // If the focus is lost, show the hint text and hide the label
+                    feedCountEditText.hint = "Feed Counts"
+                    feedCountTextView.visibility = View.GONE;
+                }
             }
         }
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -62,3 +77,4 @@ class RAddRequest : AppCompatActivity() {
         }
     }
 }
+

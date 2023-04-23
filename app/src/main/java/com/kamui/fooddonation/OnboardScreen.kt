@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.kamui.fooddonation.admin.AloginPage
 import com.kamui.fooddonation.ngo.NHomePage
-import com.kamui.fooddonation.ngo.NloginPage
+import com.kamui.fooddonation.ngo.NLoginPage
 import com.kamui.fooddonation.receiver.RcLoginPage
 import com.kamui.fooddonation.restaurant.RloginPage
 import com.kamui.fooddonation.volunteer.VLoginPage
@@ -127,8 +127,8 @@ class OnboardScreen : AppCompatActivity() {
         button5.startAnimation(fadeInAnimation)
 
         button1.setOnClickListener{
-//            val intent = Intent(this, NloginPage::class.java)
-            val intent = Intent(this, NHomePage::class.java)
+//            val intent = Intent(this, NLoginPage::class.java)
+            val intent = Intent(this, NLoginPage::class.java)
             startActivity(intent)
         }
         button2.setOnClickListener{

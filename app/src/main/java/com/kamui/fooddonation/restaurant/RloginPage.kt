@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.SigninActivity
+import com.kamui.fooddonation.SignInActivity
 import com.kamui.fooddonation.SignupActivity
 
 class RloginPage : AppCompatActivity() {
@@ -16,7 +16,7 @@ class RloginPage : AppCompatActivity() {
         val button1 = findViewById<Button>(R.id.button1)
 
         button1.setOnClickListener{
-            val intent = Intent(this, SigninActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             intent.putExtra("previousActivity", "RHomePage")
             startActivity(intent)
         }
@@ -25,6 +25,7 @@ class RloginPage : AppCompatActivity() {
 
         button2.setOnClickListener{
             val intent = Intent(this, SignupActivity::class.java)
+            intent.putExtra("previousActivity", "RHomePage")
             startActivity(intent)
         }
     }

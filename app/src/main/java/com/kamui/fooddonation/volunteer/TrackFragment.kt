@@ -1,6 +1,7 @@
 package com.kamui.fooddonation.volunteer
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kamui.fooddonation.Example
 import com.kamui.fooddonation.R
 
 class TrackFragment : Fragment() {
@@ -25,7 +27,7 @@ class TrackFragment : Fragment() {
 
         // Initialize the RecyclerView and the adapter
         recyclerView = view.findViewById(R.id.recycler_view)
-        donationAdapter = DonationAdapter(requireContext(), donationsList,this)
+        donationAdapter = DonationAdapter(requireContext(),donationsList, this)
 
         // Set the layout manager and the adapter for the RecyclerView
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -36,13 +38,10 @@ class TrackFragment : Fragment() {
         loadMyDonations()
 
         // Set the listener for the "Claim" button in the adapter
-        donationAdapter.setOnDeliverClickListener(object : DonationAdapter.OnDeliverClickListener {
-            override fun onDeliverClick(position: Int) {
+        donationAdapter.setOnTrackClickListener(object : DonationAdapter.OnTrackClickListener {
+            override fun onTrackClick(position: Int) {
                 // Get the selected donation
                 val selectedDonation = donationsList[position]
-
-                // Update the status of the donation to "claimed"
-                selectedDonation.status = "delivered"
 
                 donationAdapter.notifyItemChanged(position)
 
@@ -56,7 +55,8 @@ class TrackFragment : Fragment() {
     }
 
     private fun assignTask(selectedDonation: Donation) {
-
+//            val intent =Intent(requireContext(),Example::class.java)
+//        StartActivity(intent)
     }
 
     @SuppressLint("NotifyDataSetChanged")

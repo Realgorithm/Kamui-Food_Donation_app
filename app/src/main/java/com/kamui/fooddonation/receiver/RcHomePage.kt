@@ -9,12 +9,13 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.ngo.NgoRequest
 import com.kamui.fooddonation.restaurant.AccountFragment
 
 class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     // Initialize drawerLayout and navigationView
     private lateinit var drawerLayout: DrawerLayout
-
+    private lateinit var navigationView:NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,16 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        val navigationView = findViewById<NavigationView>(R.id.navigation_view)
+        navigationView = findViewById(R.id.navigation_view)
+
+        // Select the item with ID R.id.r_requests
+        val menu = navigationView.menu
+        val requestsItem = menu.findItem(R.id.nav_home)
+        requestsItem.isChecked = true
+        navigationView.setCheckedItem(R.id.nav_recieved)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.content_frame, RcHomeFragment())
+            .commit()
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -64,19 +74,24 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // De-highlight all other items
+        for (i in 0 until navigationView.menu.size()) {
+            val menuItem = navigationView.menu.getItem(i)
+            menuItem.isChecked = false
+        }
 
+        // Highlight the selected item
         item.isChecked = true
-        drawerLayout.closeDrawers()
 
         when(item.itemId){
             R.id.nav_home -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, RcNgoFragment())
+                    .replace(R.id.content_frame, RcHomeFragment())
                     .commit()
             }
             R.id.nav_recieved -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, RcRestaurantFragment())
+                    .replace(R.id.content_frame, RcClaimedFragment())
                     .commit()
             }
             R.id.nav_profile -> {
