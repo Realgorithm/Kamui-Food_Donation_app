@@ -2,6 +2,8 @@ package com.kamui.fooddonation.ngo
 
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -10,15 +12,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.OnboardScreen
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.admin.AdminDonationFragment
 import com.kamui.fooddonation.restaurant.AccountFragment
 
 
-class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener {
 
-    // Initialize drawerLayout, toolbar and navigationView
+    // Initialize drawerLayout and navigationView
     private lateinit var drawerLayout: DrawerLayout
-//    private lateinit var toolbar:Toolbar
     private lateinit var navigationView:NavigationView
     private lateinit var profile:ImageView
 
@@ -27,7 +32,9 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nhome_page)
 
-        // Set drawerLayout, navigationView and toolbar using findViewById
+        onNgoLoginSuccess()
+
+        // Set drawerLayout, navigationView using findViewById
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
 
@@ -51,7 +58,6 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
         supportFragmentManager.beginTransaction()
             .replace(R.id.content_frame, NgoRequest())
             .commit()
-//        toolbar = findViewById(R.id.toolbar)
 
         // Initialize toggle to open and close drawer
         val toggle = ActionBarDrawerToggle(
@@ -66,8 +72,6 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
         // Set navigation item selected listener to navigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-//        toolbar.setNavigationOnClickListener{ toggleDrawer() }
-//        toolbar.setNavigationIcon(R.drawable.mobile_login_bro)
     }
 
     // Override onOptionsItemSelected to handle drawer open and close actions
@@ -91,7 +95,7 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            doubleBackToExit()
         }
     }
 
@@ -134,13 +138,22 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
                     .commit()
             }
             R.id.logout -> {
-                // Create intent to start AHomePage activity and start the activity
+                // Update the shared preferences to indicate that the user is not logged in
+                updateLoggedInModuleStatus("Ngo",false)
+                FirebaseAuth.getInstance().signOut()
+                // Finish the current activity
+                val intent = Intent(this, OnboardScreen::class.java)
+                startActivity(intent)
                 finish()
             }
         }
         // Close the drawer
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    private fun onNgoLoginSuccess() {
+        // Call updateLoggedInNgoStatus() to set the boolean flag to true
+        updateLoggedInModuleStatus("Ngo",true)
     }
 }
 

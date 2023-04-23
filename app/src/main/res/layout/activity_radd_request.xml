@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/foodNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Food Name" />
+
+    <EditText
+        android:id="@+id/food_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:autofillHints=""
+        android:layout_marginVertical="12dp"
+        android:hint="Food Name"
+        tools:ignore="LabelFor" />
     <TextView
         android:id="@+id/foodTypeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:text="Food Type" />
 
     <EditText
@@ -17,38 +39,71 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:autofillHints=""
+        android:layout_marginVertical="12dp"
+        android:hint="Food Type"
         tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/quantityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:text="Quantity" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
     <EditText
         android:id="@+id/quantityInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="text"
         android:autofillHints="3"
+        android:layout_marginVertical="12dp"
+        android:hint="Quantity"
         tools:ignore="LabelFor" />
+
+        <Spinner
+            android:id="@+id/foodQuantitySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/expirationDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expiration Date" />
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Expiry Date" />
 
     <EditText
         android:id="@+id/expirationDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_marginVertical="12dp"
+        android:hint="Expiry Date"
+        android:autofillHints=""
+        tools:ignore="LabelFor,TextFields" />
 
     <Button
         android:id="@+id/uploadBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:text="Upload" />
 
 </LinearLayout>

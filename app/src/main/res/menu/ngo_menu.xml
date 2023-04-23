@@ -6,11 +6,11 @@
         android:icon="@drawable/mercy_04"/>
     <item
         android:id="@+id/r_requests"
-        android:title="Restuarant Requests"
+        android:title="Restuarant"
         android:icon="@drawable/mercy_04"/>
     <item
         android:id="@+id/m_employee"
-        android:title="Manage Employee"
+        android:title="Employee"
         android:icon="@drawable/mercy_04"/>
     <item
         android:id="@+id/records"

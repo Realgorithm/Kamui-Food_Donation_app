@@ -9,14 +9,21 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.kamui.fooddonation.admin.AdminDonationFragment
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.receiver.RcHomeFragment
+import com.kamui.fooddonation.restaurant.AcceptedFragment
+import com.kamui.fooddonation.restaurant.ApprovedFragment
+import com.kamui.fooddonation.restaurant.PendingFragment
 
 class DonationAdapter(
     context:Context,
     private var donationsList: ArrayList<Donation>,
     private val fragment: Fragment?,
-) : RecyclerView.Adapter<DonationAdapter.ViewHolder>() {
+
+    ) : RecyclerView.Adapter<DonationAdapter.ViewHolder>() {
 
     // Define a listener for the "Claim" button
     private var onClaimClickListener: OnClaimClickListener? = null
@@ -42,65 +49,217 @@ class DonationAdapter(
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ViewHolder(view)
     }
-
-    // Replace the contents of a view (invoked by the layout manager)
     @SuppressLint("SetTextI18n")
+    private fun configureForAdminDonationList(holder: ViewHolder, donation: Donation){
+        holder.itemView.visibility = View.GONE
+        holder.trackButton.visibility = View.GONE
+        holder.claimButton.visibility = View.GONE
+        if(donation.status == "unapproved"){
+            holder.itemView.visibility=View.VISIBLE
+            holder.donorTextView.text =        "Donor:                 ${donation.donor}"
+            holder.pickupAddressTextView.text ="Pickup:                ${donation.donorAddress}"
+            holder.foodNameTextView.text =     "Food name:       ${donation.foodName}"
+            holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+            holder.foodTypeTextView.text =     "Food Type:         ${donation.foodType}"
+            holder.expiryDateTextView.text =   "Expiry Date:       ${donation.expiryDate}"
+            holder.statusTextView.text =       "Status:                 Unapproved"
+            holder.receiverTextView.visibility =View.GONE
+            holder.distance.visibility = View.GONE
+            holder.destAddressTextView.visibility = View.GONE
+            holder.claimedBy.visibility = View.GONE
+        }
+    }
+    @SuppressLint("SetTextI18n")
+    private fun configureForRcHomeFragment(holder: ViewHolder, donation: Donation) {
+        // Display only available donations within the maximum distance
+        holder.itemView.visibility = View.GONE
+        holder.trackButton.visibility=View.GONE
+        if (donation.status == "approved") {
+            holder.itemView.visibility = View.VISIBLE
+            holder.donorTextView.text =        "Donor:                 ${donation.donor}"
+            holder.pickupAddressTextView.text ="Address:             ${donation.donorAddress}"
+            holder.foodNameTextView.text =     "Food name:       ${donation.foodName}"
+            holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+            holder.foodTypeTextView.text =     "Food Type:         ${donation.foodType}"
+            holder.expiryDateTextView.text =   "Expiry Date:       ${donation.expiryDate}"
+            holder.statusTextView.text =       "Status:                 Available"
+            holder.receiverTextView.visibility =View.GONE
+            holder.distance.visibility = View.GONE
+            holder.destAddressTextView.visibility = View.GONE
+            holder.claimedBy.visibility = View.GONE
+//        holder.distance.text = "Distance: ${
+//            donation.location?.let {
+//                donation.getDistanceFromReceiver(
+//                    it
+//                )
+//            }
+//        } meters"
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun configureForVolHomeFragment(holder: ViewHolder, donation: Donation) {
+        holder.itemView.visibility = View.GONE
+        holder.distance.visibility=View.GONE
+        holder.trackButton.visibility = View.GONE
+        if (donation.status == "availableForVol") {
+            holder.itemView.visibility = View.VISIBLE
+            holder.claimButton.visibility = View.VISIBLE
+            holder.claimButton.isEnabled = true
+            holder.claimButton.text = "Claim"
+            holder.foodNameTextView.text =     "Food name:      ${donation.foodName}"
+            holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+            holder.donorTextView.text =        "Donor:                ${donation.donor}"
+            holder.pickupAddressTextView.text ="Pickup:               ${donation.donorAddress}"
+            holder.receiverTextView.text =     "Receiver:           ${donation.receiver}"
+            holder.destAddressTextView.text =  "Drop:                  ${donation.receiverAddress}"
+            holder.statusTextView.text =       "Status:                Available"
+            holder.foodTypeTextView.visibility =View.GONE
+            holder.distance.visibility = View.GONE
+            holder.expiryDateTextView.visibility = View.GONE
+            holder.claimedBy.visibility = View.GONE
+        }
+        else if (donation.status == "claimedByVol") {
+            if (donation.claimedBy != "") {
+                holder.itemView.visibility = View.VISIBLE
+                holder.foodNameTextView.text =     "Food name:      ${donation.foodName}"
+                holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+                holder.donorTextView.text =        "Donor:                ${donation.donor}"
+                holder.pickupAddressTextView.text ="Pickup:               ${donation.donorAddress}"
+                holder.receiverTextView.text =     "Receiver:           ${donation.receiver}"
+                holder.destAddressTextView.text =  "Drop:                  ${donation.receiverAddress}"
+                holder.statusTextView.text =       "Status:                Claimed"
+                holder.claimedBy.text =            "Claimed by:      ${donation.claimedBy}"
+                holder.claimButton.text = "Claimed"
+                holder.claimButton.isEnabled=false
+                holder.foodTypeTextView.visibility = View.GONE
+                holder.expiryDateTextView.visibility = View.GONE
+            } else {
+                holder.claimedBy.visibility = View.GONE
+            }
+        } else {
+            holder.claimedBy.visibility = View.GONE
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun configureForTrackFragment(holder: ViewHolder, donation: Donation) {
+        holder.distance.visibility=View.GONE
+        holder.claimButton.visibility = View.GONE
+        if (donation.status == "claimedByVol") {
+            if (donation.claimedBy != "") {
+                holder.itemView.visibility = View.VISIBLE
+                holder.foodNameTextView.text =     "Food name:      ${donation.foodName}"
+                holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+                holder.donorTextView.text =        "Donor:                ${donation.donor}"
+                holder.pickupAddressTextView.text ="Pickup:               ${donation.donorAddress}"
+                holder.receiverTextView.text =     "Receiver:           ${donation.receiver}"
+                holder.destAddressTextView.text =  "Drop:                  ${donation.receiverAddress}"
+                holder.statusTextView.text =       "Status:                Claimed"
+                holder.claimedBy.text =            "Claimed by:      ${donation.claimedBy}"
+                holder.foodTypeTextView.visibility = View.GONE
+                holder.expiryDateTextView.visibility = View.GONE
+            } else {
+                holder.claimedBy.visibility = View.GONE
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun configureForPendingDonationList(holder: DonationAdapter.ViewHolder, donation: Donation) {
+        holder.itemView.visibility = View.GONE
+        holder.trackButton.visibility = View.GONE
+        holder.claimButton.visibility = View.GONE
+        if(donation.status == "unapproved"){
+            holder.itemView.visibility=View.VISIBLE
+            holder.donorTextView.text =        "Donor:                 ${donation.donor}"
+            holder.pickupAddressTextView.text ="Pickup:                ${donation.donorAddress}"
+            holder.foodNameTextView.text =     "Food name:       ${donation.foodName}"
+            holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+            holder.foodTypeTextView.text =     "Food Type:         ${donation.foodType}"
+            holder.expiryDateTextView.text =   "Expiry Date:       ${donation.expiryDate}"
+            holder.statusTextView.text =       "Status:                 Unapproved"
+            holder.receiverTextView.visibility =View.GONE
+            holder.distance.visibility = View.GONE
+            holder.destAddressTextView.visibility = View.GONE
+            holder.claimedBy.visibility = View.GONE
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun configureForApprovedDonationList(holder: DonationAdapter.ViewHolder, donation: Donation) {
+        holder.itemView.visibility = View.GONE
+        holder.trackButton.visibility = View.GONE
+        holder.claimButton.visibility = View.GONE
+        if(donation.status == "approved"){
+            holder.itemView.visibility=View.VISIBLE
+            holder.donorTextView.text =        "Donor:                 ${donation.donor}"
+            holder.pickupAddressTextView.text ="Pickup:                ${donation.donorAddress}"
+            holder.foodNameTextView.text =     "Food name:       ${donation.foodName}"
+            holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+            holder.foodTypeTextView.text =     "Food Type:         ${donation.foodType}"
+            holder.expiryDateTextView.text =   "Expiry Date:       ${donation.expiryDate}"
+            holder.statusTextView.text =       "Status:                 approved"
+            holder.receiverTextView.visibility =View.GONE
+            holder.distance.visibility = View.GONE
+            holder.destAddressTextView.visibility = View.GONE
+            holder.claimedBy.visibility = View.GONE
+        }
+    }
+    @SuppressLint("SetTextI18n")
+    private fun configureForAcceptedFragment(holder: ViewHolder, donation: Donation) {
+        holder.distance.visibility=View.GONE
+        holder.trackButton.visibility = View.GONE
+        holder.claimButton.visibility = View.GONE
+        holder.itemView.visibility = View.GONE
+        if (donation.status == "availableForVol") {
+            holder.itemView.visibility = View.VISIBLE
+            holder.foodNameTextView.text =     "Food name:      ${donation.foodName}"
+            holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+            holder.donorTextView.text =        "Donor:                ${donation.donor}"
+            holder.pickupAddressTextView.text ="Pickup:               ${donation.donorAddress}"
+            holder.receiverTextView.text =     "Receiver:           ${donation.receiver}"
+            holder.destAddressTextView.text =  "Drop:                  ${donation.receiverAddress}"
+            holder.statusTextView.text =       "Status:                Available"
+            holder.foodTypeTextView.visibility =View.GONE
+            holder.distance.visibility = View.GONE
+            holder.expiryDateTextView.visibility = View.GONE
+            holder.claimedBy.visibility = View.GONE
+
+        } else if (donation.status == "claimedByVol") {
+            if (donation.claimedBy != "") {
+                holder.itemView.visibility = View.VISIBLE
+                holder.foodNameTextView.text =     "Food name:      ${donation.foodName}"
+                holder.foodQuantityTextView.text = "Food Quantity: ${donation.foodQuantity}"
+                holder.donorTextView.text =        "Donor:                ${donation.donor}"
+                holder.pickupAddressTextView.text ="Pickup:               ${donation.donorAddress}"
+                holder.receiverTextView.text =     "Receiver:           ${donation.receiver}"
+                holder.destAddressTextView.text =  "Drop:                  ${donation.receiverAddress}"
+                holder.statusTextView.text =       "Status:                Claimed"
+                holder.claimedBy.text =            "Claimed by:      ${donation.claimedBy}"
+                holder.foodTypeTextView.visibility = View.GONE
+                holder.expiryDateTextView.visibility = View.GONE
+            } else {
+                holder.claimedBy.visibility = View.GONE
+            }
+        } else {
+            holder.claimedBy.visibility = View.GONE
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val donation = donationsList[position]
-        if (fragment is VolHomeFragment) {
-            holder.distance.visibility=View.GONE
-            holder.trackButton.visibility = View.GONE
-            if (donation.status == "Available") {
-                holder.claimButton.visibility = View.VISIBLE
-                holder.claimedBy.visibility = View.GONE
-            } else if (donation.status == "claimed") {
-                if (donation.ClaimedBy != "") {
-                    holder.claimedBy.visibility = View.VISIBLE
-                    holder.claimButton.visibility = View.VISIBLE
-                    holder.claimButton.text = "Claimed"
-                    holder.claimButton.isEnabled=false
-                    holder.claimedBy.text = "Claimed by: ${donation.ClaimedBy}"
-                } else {
-                    holder.claimedBy.visibility = View.GONE
-                }
-            } else {
-                holder.claimedBy.visibility = View.GONE
-            }
-        } else if (fragment is TrackFragment) {
-            holder.distance.visibility=View.GONE
-            holder.claimButton.visibility = View.GONE
-            if (donation.status != "claimed") {
-                holder.trackButton.visibility = View.GONE
-                holder.claimedBy.visibility = View.GONE
-            }
+        when(fragment) {
+            is VolHomeFragment -> configureForVolHomeFragment(holder, donation)
+            is TrackFragment -> configureForTrackFragment(holder, donation)
+            is RcHomeFragment -> configureForRcHomeFragment(holder, donation)
+            is AdminDonationFragment -> configureForAdminDonationList(holder, donation)
+            is PendingFragment ->configureForPendingDonationList(holder,donation)
+            is ApprovedFragment ->configureForApprovedDonationList(holder,donation)
+            is AcceptedFragment ->configureForAcceptedFragment(holder, donation)
         }
-        else if(fragment is RcHomeFragment) {
-            // Display only available donations within the maximum distance
-            holder.itemView.visibility = View.GONE
-            holder.trackButton.visibility=View.GONE
-            if (donation.status == "Available") {
-                holder.itemView.visibility = View.VISIBLE
-                holder.titleTextView.visibility= View.VISIBLE
-                holder.titleTextView.text = donation.title
-                holder.donorTextView.text = "Donor: ${donation.donor}"
-                holder.pickupAddressTextView.text = "Address: ${donation.pickupAddress}"
-//                holder.distance.text = "Distance: ${
-//                    donation.location?.let {
-//                        donation.getDistanceFromReceiver(
-//                            it
-//                        )
-//                    }
-//                } meters"
-            } else {
-                holder.itemView.visibility = View.GONE
-            }
-        }
-
-        holder.titleTextView.text = donation.title
-        holder.donorTextView.text = "Donor: ${donation.donor}"
-        holder.pickupAddressTextView.text = "Pickup Address: ${donation.pickupAddress}"
-        holder.destAddressTextView.text = "Drop Address: ${donation.destAddress}"
-        holder.statusTextView.text = "Status: ${donation.status}"
 
         holder.claimButton.setOnClickListener {
             onClaimClickListener?.onClaimClick(position)
@@ -109,6 +268,7 @@ class DonationAdapter(
         holder.trackButton.setOnClickListener {
             onTrackClickListener?.onTrackClick(position)
         }
+        // ...
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -119,16 +279,22 @@ class DonationAdapter(
         notifyDataSetChanged()
     }
 
+
     // Define the ViewHolder
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titleTextView: TextView = view.findViewById(R.id.donation_title)
         val donorTextView: TextView = view.findViewById(R.id.donor_name)
-        val distance: TextView = view.findViewById(R.id.distance)
+        val receiverTextView: TextView = view.findViewById(R.id.receiver_name)
+        val distance : TextView = view.findViewById(R.id.distance)
         val pickupAddressTextView: TextView = view.findViewById(R.id.donation_pickup_address)
         val destAddressTextView: TextView = view.findViewById(R.id.donation_dest_address)
         val statusTextView: TextView = view.findViewById(R.id.donation_status)
+        val claimedBy: TextView = view.findViewById(R.id.claimed_by)
+        val foodNameTextView: TextView = view.findViewById(R.id.donation_food_name)
+        val foodQuantityTextView: TextView = view.findViewById(R.id.food_quantity)
+        val foodTypeTextView:TextView = view.findViewById(R.id.food_type)
+        val expiryDateTextView:TextView = view.findViewById(R.id.expiryDate)
+//        val emptyView:TextView =view.findViewById(R.id.empty_view)
         val claimButton: Button = view.findViewById(R.id.claim_button)
         val trackButton: Button = view.findViewById(R.id.track_button)
-        val claimedBy: TextView = view.findViewById(R.id.claimed_by)
     }
 }

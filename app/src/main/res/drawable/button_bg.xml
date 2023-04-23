@@ -11,7 +11,6 @@
     </item>
     <item android:state_enabled="true">
         <shape android:shape="oval">
-            <solid android:color="@color/olive_700"/>
             <size
                 android:width="180dp"
                 android:height="180dp"/>
@@ -19,7 +18,7 @@
     </item>
     <item>
         <shape android:shape="oval" >
-            <solid android:color="@color/olive_200"/>
+            <solid android:color="#E25252"/>
             <size
                 android:width="120dp"
                 android:height="120dp"/>

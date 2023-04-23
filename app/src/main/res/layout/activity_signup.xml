@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -19,7 +20,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/olive_700"
             android:paddingHorizontal="14dp"
             >
             <TextView
@@ -29,8 +29,7 @@
                 android:text="@string/restaurant_signup"
                 android:textSize="40sp"
                 android:textStyle="bold"
-                android:textAlignment="center"
-                android:textColor="#000000"/>
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/tv_second"
@@ -40,8 +39,7 @@
                 android:text="@string/restaurant_title"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:textAlignment="center"
-                android:textColor="#000000"/>
+                android:textAlignment="center"/>
 
             <!-- Common input fields -->
             <EditText
@@ -52,6 +50,8 @@
                 android:hint="@string/full_name_hint"
                 android:inputType="textPersonName"
                 android:background="@drawable/borders"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:autofillHints="Smith" />
@@ -64,29 +64,64 @@
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:background="@drawable/borders"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:autofillHints="abc@email.com" />
 
-            <EditText
-                android:id="@+id/address_input"
+            <LinearLayout
+                android:id="@+id/address_layout"
                 android:layout_width="match_parent"
+                android:layout_below="@id/email_input"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/email_input"
-                android:hint="@string/address"
-                android:background="@drawable/borders"
-                android:padding="10dp"
-                android:layout_marginTop="10dp"
-                android:inputType="textPostalAddress"
-                android:autofillHints="xyz road" />
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/address_input"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:hint="@string/address"
+                    android:background="@drawable/borders"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textPostalAddress"
+                    android:maxLines="1"
+                    android:autofillHints="xyz road" />
+
+                <EditText
+                    android:id="@+id/location_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:background="@drawable/borders"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    android:inputType="text" />
+
+                <ListView
+                    android:id="@+id/suggestions_list_view"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="NestedScrolling" />
+
+            </LinearLayout>
             <EditText
                 android:id="@+id/phone_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_input"
+                android:layout_below="@+id/address_layout"
                 android:hint="@string/phone_hint"
                 android:background="@drawable/borders"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:inputType="phone"
@@ -112,6 +147,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/borders"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:hint="Designtion"/>
@@ -138,12 +175,14 @@
                                 android:id="@+id/radio_full_access"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Full Access"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_restricted"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Restricted Access"
                                 />
@@ -166,6 +205,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/restaurant_name_hint"
                         android:background="@drawable/borders"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:inputType="text" />
@@ -192,12 +233,14 @@
                                 android:id="@+id/radio_res_chinese"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Chinese"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_italian"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Italian"
                                 />
@@ -205,6 +248,7 @@
                                 android:id="@+id/radio_res_maxican"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Mexican"
                                 />
@@ -212,6 +256,7 @@
                                 android:id="@+id/radio_res_indian"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Indian"
                                 />
@@ -219,6 +264,7 @@
                                 android:id="@+id/radio_res_japanese"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Japanese"
                                 />
@@ -247,12 +293,14 @@
                                 android:id="@+id/radio_res_perishable"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Perishable"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_nonperishable"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Non-Perishable"
                                 />
@@ -260,6 +308,7 @@
                                 android:id="@+id/radio_res_cooked"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Cooked meals"
                                 />
@@ -267,6 +316,7 @@
                                 android:id="@+id/radio_res_leftover"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Leftover food"
                                 />
@@ -274,6 +324,7 @@
                                 android:id="@+id/radio_res_bakery"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Bakery items"
                                 />
@@ -303,12 +354,14 @@
                                 android:id="@+id/radio_res_anytime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Anytime"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_morning"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Morning"
                                 />
@@ -316,6 +369,7 @@
                                 android:id="@+id/radio_res_afternoon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Afternoon"
                                 />
@@ -323,6 +377,7 @@
                                 android:id="@+id/radio_res_evening"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Evening"
                                 />
@@ -330,6 +385,7 @@
                                 android:id="@+id/radio_res_night"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Night"
                                 />
@@ -353,6 +409,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/ngo_name_hint"
                         android:background="@drawable/borders"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:inputType="text" />
@@ -379,12 +437,14 @@
                                 android:id="@+id/radio_perishable"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Perishable"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_nonperishable"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Non-Perishable"
                                 />
@@ -392,6 +452,7 @@
                                 android:id="@+id/radio_cooked"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Cooked meals"
                                 />
@@ -399,6 +460,7 @@
                                 android:id="@+id/radio_leftover"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Leftover food"
                                 />
@@ -406,6 +468,7 @@
                                 android:id="@+id/radio_bakery"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Bakery items"
                                 />
@@ -435,12 +498,14 @@
                             android:id="@+id/radio_non_profit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:text="Non Profit"
                             />
                         <RadioButton
                             android:id="@+id/radio_community"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Community"
                             />
@@ -448,6 +513,7 @@
                             android:id="@+id/faith_based"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Faith-based"
                             />
@@ -455,6 +521,7 @@
                             android:id="@+id/radio_government"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Government"
                             />
@@ -462,6 +529,7 @@
                             android:id="@+id/radio_international"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="International"
                             />
@@ -491,12 +559,14 @@
                                 android:id="@+id/radio_anytime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Anytime"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_morning"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Morning"
                                 />
@@ -504,6 +574,7 @@
                                 android:id="@+id/radio_afternoon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Afternoon"
                                 />
@@ -511,6 +582,7 @@
                                 android:id="@+id/radio_evening"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Evening"
                                 />
@@ -518,6 +590,7 @@
                                 android:id="@+id/radio_night"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
                                 android:text="Night"
                                 />
@@ -531,6 +604,8 @@
                         android:layout_marginTop="10dp"
                         android:padding="10dp"
                         android:background="@drawable/borders"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
                         android:hint="NGO's tax ID or registration number"/>
 
                 </LinearLayout>
@@ -549,6 +624,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/ngo_pickup_time"
                         android:background="@drawable/borders"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:inputType="text" />
@@ -586,12 +663,14 @@
                             android:id="@+id/radio_weekdays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:text="Weekdays (Monday-Friday)"
                             />
                         <RadioButton
                             android:id="@+id/radio_weekends"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Weekends (Saturday-Sunday)"
                             />
@@ -599,6 +678,7 @@
                             android:id="@+id/radio_vol_evening"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Evenings (5pm-8pm)"
                             />
@@ -606,6 +686,7 @@
                             android:id="@+id/radio_vol_morning"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Mornings (9am-12pm)"
                             />
@@ -613,6 +694,7 @@
                             android:id="@+id/radio_vol_afternoon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Afternoons (1pm-4pm)"
                             />
@@ -620,6 +702,7 @@
                             android:id="@+id/radio_flexible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="8dp"
                             android:text="Flexible"
                             />
@@ -650,12 +733,14 @@
                                 android:id="@+id/radio_event"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:text="Event setup and cleanup"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_food_prep"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Food preparation and cooking"
                                 />
@@ -663,6 +748,7 @@
                                 android:id="@+id/radio_serving"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Serving food and drinks"
                                 />
@@ -670,6 +756,7 @@
                                 android:id="@+id/radio_donation"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Donation sorting and packaging"
                                 />
@@ -677,6 +764,7 @@
                                 android:id="@+id/radio_fundraising"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Fundraising and outreach"
                                 />
@@ -684,6 +772,7 @@
                                 android:id="@+id/radio_driving"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
                                 android:text="Driving and transportation"
                                 />
@@ -703,6 +792,8 @@
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:background="@drawable/borders"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:autofillHints="23sd234s" />
@@ -715,6 +806,8 @@
                 android:hint="@string/confirm_password_hint"
                 android:inputType="textPassword"
                 android:background="@drawable/borders"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:autofillHints="23sd234s" />
@@ -730,8 +823,7 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="14dp"
-                android:backgroundTint="@color/yellow_200"/>
+                android:layout_margin="14dp"/>
 
         </RelativeLayout>
     </ScrollView>

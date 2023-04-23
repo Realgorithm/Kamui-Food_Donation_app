@@ -12,8 +12,7 @@ import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.kamui.fooddonation.admin.AloginPage
-import com.kamui.fooddonation.ngo.NHomePage
+import com.kamui.fooddonation.admin.ALoginPage
 import com.kamui.fooddonation.ngo.NLoginPage
 import com.kamui.fooddonation.receiver.RcLoginPage
 import com.kamui.fooddonation.restaurant.RloginPage
@@ -33,7 +32,7 @@ class OnboardScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding_screen)
-
+        supportActionBar?.hide()
 
         // Get references to the buttons
         button1 = findViewById(R.id.button1)
@@ -144,7 +143,7 @@ class OnboardScreen : AppCompatActivity() {
             startActivity(intent)
         }
         button5.setOnClickListener{
-            val intent = Intent(this, AloginPage::class.java)
+            val intent = Intent(this, ALoginPage::class.java)
             startActivity(intent)
         }
     }

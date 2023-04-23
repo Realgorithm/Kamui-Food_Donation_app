@@ -1,15 +1,18 @@
 package com.kamui.fooddonation.restaurant
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.kamui.fooddonation.OnboardScreen
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.admin.BassFragment
 
-class AccountFragment : Fragment() {
+class AccountFragment : BassFragment() {
 
     companion object {
         fun newInstance(): AccountFragment {
@@ -46,8 +49,14 @@ class AccountFragment : Fragment() {
 
         // Handle the logout button click
         logoutButton.setOnClickListener {
+            updateLoggedInModuleStatus("Restaurant",false)
+            updateLoggedInModuleStatus("Volunteer",false)
             // Logout the user
-            activity?.onBackPressed()
+            FirebaseAuth.getInstance().signOut()
+            // Finish the current activity
+            val intent = Intent(requireContext(), OnboardScreen::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
 
         // Handle the delete account button click
@@ -56,5 +65,6 @@ class AccountFragment : Fragment() {
         }
         return view
         }
-    }
+
+}
 

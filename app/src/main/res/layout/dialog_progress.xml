@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    app:layout_constraintCircleRadius="20dp"
     android:orientation="horizontal"
     android:padding="@dimen/progress_dialog_content_padding">
 
@@ -23,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/progress_text_marginStart"
         android:text="@string/please_wait"
-        android:textColor="@color/olive_200"
         android:textSize="@dimen/progress_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/progressBar"

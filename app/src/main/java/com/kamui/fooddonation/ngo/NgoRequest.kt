@@ -31,7 +31,7 @@ class NgoRequest : Fragment() {
             tabLayout, viewPager
         ) { tab, position ->
             when (position) {
-                0 -> tab.text = "NGO REQUESTS"
+                0 -> tab.text = "MY REQUESTS"
                 1 -> tab.text = "VOLUNTEERS"
             }
         }.attach()

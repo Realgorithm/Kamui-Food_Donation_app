@@ -40,6 +40,7 @@
     <string name="Cuisine">Cuisines</string>
     <string name="food_type">Food Type</string>
     <string name="please_wait">Please Wait!</string>
+    <string name="please_click_back_again_to_exit">click again to exit</string>
 
     <string-array name="dropdown_options">
         <item>Option 1</item>

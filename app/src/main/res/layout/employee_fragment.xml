@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:orientation="vertical"
-        android:background="@color/white"
         >
 
     <TextView
@@ -28,7 +27,6 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
         android:text="Employee id"/>
 
         <TextView
@@ -36,14 +34,12 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             android:text="Employee Name"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textColor="@color/black"
             android:text="Employee Number"/>
 
     </LinearLayout>
@@ -55,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/yellow_200"
         android:text="Add Employee" />
 
 

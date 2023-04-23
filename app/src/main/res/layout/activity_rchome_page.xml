@@ -6,18 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <!-- Content container -->
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white" />
-
+    </LinearLayout>
 
     <!-- Navigation drawer -->
     <com.google.android.material.navigation.NavigationView
@@ -28,9 +28,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/receiver_menu"
-        app:itemTextColor="@color/black"
-        app:itemBackground="@drawable/menu_selector"
-        android:background="@color/pink_200"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

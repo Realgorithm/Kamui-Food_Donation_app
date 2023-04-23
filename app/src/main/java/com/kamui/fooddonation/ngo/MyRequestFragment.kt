@@ -56,7 +56,7 @@ class MyRequestFragment : Fragment() {
             if (event.action == MotionEvent.ACTION_UP) {
                 calendarView.visibility =
                     if (calendarView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-                Log.d("calenvis","Value ${calendarView.visibility}")
+                Log.d("calendars","Value ${calendarView.visibility}")
                 true
             } else {
                 false
