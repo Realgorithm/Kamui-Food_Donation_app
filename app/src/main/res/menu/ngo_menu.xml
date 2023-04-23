@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/n_requests"
+        android:id="@+id/ngo_home"
         android:title="Home"
         android:icon="@drawable/mercy_04"/>
     <item
-        android:id="@+id/r_requests"
-        android:title="Restuarant Requests"
-        android:icon="@drawable/mercy_04"/>
-    <item
         android:id="@+id/m_employee"
-        android:title="Manage Employee"
+        android:title="Employee"
         android:icon="@drawable/mercy_04"/>
     <item
         android:id="@+id/records"

@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--        -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,9 +16,16 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/Theme.KamuiFoodDonationApp"
+        android:supportsRtl="true"
         tools:targetApi="31">
+        <activity
+            android:name=".AdminDonationActivity"
+            android:exported="false" />
+        <activity android:name=".admin.AdminDonationFragment" />
+        <activity
+            android:name=".BaseActivity"
+            android:exported="false" />
         <activity
             android:name=".ngo.DonationDetails"
             android:exported="false" />
@@ -143,7 +152,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".admin.AloginPage"
+            android:name=".admin.ALoginPage"
             android:exported="false"
             android:theme="@style/AppTheme.loginScreen">
             <meta-data

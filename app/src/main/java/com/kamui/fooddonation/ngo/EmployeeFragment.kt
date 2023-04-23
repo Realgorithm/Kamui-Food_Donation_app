@@ -1,5 +1,6 @@
 package com.kamui.fooddonation.ngo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.cardview.widget.CardView
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
 
 class EmployeeFragment : Fragment() {
-
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var employeeAdapter: EmployeeAdapter
+    private lateinit var emptyView: TextView
     companion object {
         // Static function to create a new instance of this fragment
         fun newInstance(): EmployeeFragment {
@@ -20,6 +26,7 @@ class EmployeeFragment : Fragment() {
     }
 
     // Called when the fragment should create its UI
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,13 +36,22 @@ class EmployeeFragment : Fragment() {
 
         // Get references to the Add Employee button and the Employee CardView
         val addEmp = view.findViewById<Button>(R.id.add_emp)
-        val cardView = view.findViewById<CardView>(R.id.cardview)
-
-        // Set a click listener for the Employee CardView
-        cardView.setOnClickListener{
-            // Open the UpdateEmployee activity when the card view is clicked
-            val intent = Intent(requireContext(), UpdateEmployee::class.java)
-            startActivity(intent)
+        emptyView = view.findViewById(R.id.empty_view)
+        // Initialize the RecyclerView and the adapter
+        recyclerView = view.findViewById(R.id.recycler_view)
+        // Set the layout manager and the adapter for the RecyclerView
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        FireStoreClass().getAllEmployees {employees ->
+            employeeAdapter = EmployeeAdapter(ArrayList(employees))
+            recyclerView.adapter = employeeAdapter
+            if (employees.isNotEmpty()) {
+                recyclerView.visibility = View.VISIBLE
+                emptyView.visibility = View.GONE
+            } else {
+                recyclerView.visibility = View.GONE
+                emptyView.visibility = View.VISIBLE
+            }
         }
 
         // Set a click listener for the Add Employee button

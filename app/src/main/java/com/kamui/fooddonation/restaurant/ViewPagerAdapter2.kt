@@ -17,8 +17,8 @@ class ViewPagerAdapter2(fragmentManager: FragmentManager, lifecycle: Lifecycle) 
         // Return the corresponding fragment based on the position
         return when (position) {
             0 -> PendingFragment()
-            1 -> AcceptedFragment()
-            2 -> PreviousFragment()
+            1 -> ApprovedFragment()
+            2 -> AcceptedFragment()
             else -> Fragment() // Return a default empty fragment for an invalid position
         }
     }

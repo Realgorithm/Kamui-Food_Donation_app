@@ -1,47 +1,69 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.KamuiFoodDonationApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:fontFamily">@font/montserratregular</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/olive_700</item>
-        <item name="colorPrimaryVariant">@color/olive_200</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_700</item>
-        <item name="colorSecondaryVariant">@color/green_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/olive_200</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <!-- Set the background of the action bar title -->
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarTheme">@style/AppTheme.ActionBar</item>
+
         <!-- Customize your theme here. -->
     </style>
+    <style name="MyActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="background">@color/red_200</item>
+    </style>
+    <style name="AppTheme.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar.Primary">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/montserratregular</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="AppTheme.OnboardScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.OnboardScreen" parent="Theme.KamuiFoodDonationApp">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/montserratregular</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="AppTheme.sliderScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:fontFamily">@font/montserratregular</item>
+    <style name="AppTheme.sliderScreen" parent="Theme.KamuiFoodDonationApp">
+        <item name="android:fontFamily">@font/montserratalternatesbolditalic</item>
         <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="AppTheme.loginScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.loginScreen" parent="Theme.KamuiFoodDonationApp">
         <item name="android:fontFamily">@font/montserratalternatesbolditalic</item>
         <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/white</item>
     </style>
-    <style name="AppTheme.signupScreen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:fontFamily">@font/montserratalternatesblack</item>
+    <style name="AppTheme.signupScreen" parent="Theme.KamuiFoodDonationApp">
+        <item name="android:fontFamily">@font/montserratalternatesbolditalic</item>
         <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">22sp</item>
+    </style>
+    <style name="CustomTheme" parent="Theme.KamuiFoodDonationApp">
+    <item name="android:background">@android:color/black</item>
+    <item name="colorPrimary">@color/red_200</item>
+    <item name="colorPrimaryDark">@color/red_200</item>
+    <item name="colorAccent">@color/red_200</item>
+    <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>

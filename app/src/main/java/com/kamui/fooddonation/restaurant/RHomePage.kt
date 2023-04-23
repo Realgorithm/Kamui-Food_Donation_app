@@ -1,20 +1,44 @@
 package com.kamui.fooddonation.restaurant
 
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.data.RestaurantData
+import java.util.Locale
 
-class RHomePage : AppCompatActivity() {
+class RHomePage : BaseActivity() {
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rhome_page)
 
-        // Set the title of the activity
-        supportActionBar?.title = "Restaurant Name"
+        onRestaurantLoginSuccess()
+
+        FireStoreClass().getUserData("restaurant", RestaurantData::class.java){ userData ->
+            val restaurantName= userData?.name.toString()
+            // Set the title of the activity
+            // Set the title and enable the back button
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+            supportActionBar?.setDisplayShowCustomEnabled(true)
+            supportActionBar?.setCustomView(R.layout.action_bar_title)
+
+            val title = findViewById<TextView>(R.id.action_bar_title)
+            title.text = "Welcome ${restaurantName.toUpperCase(Locale.ROOT)}"
+
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+//            supportActionBar?.title = "Welcome ${restaurantName.toUpperCase(Locale.ROOT)}"
+        }
 
         // Set up the ViewPager to display the restaurant menu items
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
@@ -47,4 +71,13 @@ class RHomePage : AppCompatActivity() {
             }
         })
     }
+    // Function to update the shared preferences for Restaurant login status
+    private fun onRestaurantLoginSuccess() {
+        // Call updateLoggedInRestaurantStatus() to set the boolean flag to true
+        updateLoggedInModuleStatus("Restaurant",true)
+    }
+    override fun onBackPressed() {
+        doubleBackToExit()
+    }
+
 }

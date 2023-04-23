@@ -7,7 +7,7 @@
         android:background="@color/blue"/>
 
     <item
-        android:id="@+id/nav_recieved"
+        android:id="@+id/nav_received"
         android:title="My Claim"
         android:icon="@drawable/mercy_04"/>
 

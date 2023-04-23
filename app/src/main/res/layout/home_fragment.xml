@@ -13,8 +13,7 @@
         android:text="@string/restaurant_signin"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/green_700"/>
+        android:textAlignment="center"/>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -30,12 +29,14 @@
                 android:id="@+id/request"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/mobile_login_bro"/>
+                android:src="@drawable/mobile_login_bro"
+                android:contentDescription="donation" />
 
             <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/mobile_login_bro"/>
+                android:src="@drawable/mobile_login_bro"
+                android:contentDescription="donation"/>
 
             <ImageView
                 android:layout_width="150dp"
@@ -70,8 +71,7 @@
         android:text="@string/restaurant_signin"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/green_700"/>
+        android:textAlignment="center"/>
 
     <ImageView
         android:layout_width="150dp"
@@ -85,8 +85,7 @@
         android:text="@string/restaurant_signin"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/green_700"/>
+        android:textAlignment="center"/>
 
     <ImageView
         android:layout_width="150dp"

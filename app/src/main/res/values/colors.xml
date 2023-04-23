@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="pink_200">#F4ECCE</color>
     <color name="red_200">#E80909</color>
     <color name="olive_200">#CADD8D</color>
@@ -10,4 +11,24 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#2160D4</color>
     <color name="yellow">#FFD21D</color>
+
+    <color name="primary">#FF000000</color> <!-- black -->
+    <color name="primary_dark">#BF000000</color> <!-- darker black -->
+    <color name="accent">#FF0000</color> <!-- red -->
+    <color name="background">#FFFFFF</color> <!-- white -->
+    <color name="text_primary">#FF000000</color> <!-- black text color -->
+    <color name="text_secondary">#99000000</color> <!-- dark gray text color -->
+    <color name="divider">#1F000000</color> <!-- light gray divider color -->
+    <!-- Primary brand color -->
+    <color name="colorPrimary">#E50914</color>
+    <color name="colorPrimaryVariant">#000000</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <!-- Secondary brand color -->
+    <color name="colorSecondary">#3CB371</color>
+    <color name="colorSecondaryVariant">#FFD700</color>
+    <color name="colorOnSecondary">#000000</color>
+
+    <!-- Accent color -->
+    <color name="colorAccent">#D3D3D3</color>
 </resources>

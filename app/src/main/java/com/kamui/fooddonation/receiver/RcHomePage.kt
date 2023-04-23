@@ -1,18 +1,19 @@
 package com.kamui.fooddonation.receiver
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.OnboardScreen
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.ngo.NgoRequest
 import com.kamui.fooddonation.restaurant.AccountFragment
 
-class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class RcHomePage : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     // Initialize drawerLayout and navigationView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView:NavigationView
@@ -20,17 +21,29 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rchome_page)
-        supportActionBar?.hide()
+
+        onReceiverLoginSuccess()
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         navigationView = findViewById(R.id.navigation_view)
+
+        // Get the header view from the NavigationView
+        val headerView = navigationView.getHeaderView(0)
+
+        // Set an OnClickListener on the header view
+        headerView.setOnClickListener {
+            // Your code here
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.content_frame,AccountFragment())
+                .commit()
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
 
         // Select the item with ID R.id.r_requests
         val menu = navigationView.menu
         val requestsItem = menu.findItem(R.id.nav_home)
         requestsItem.isChecked = true
-        navigationView.setCheckedItem(R.id.nav_recieved)
+        navigationView.setCheckedItem(R.id.nav_received)
         supportFragmentManager.beginTransaction()
             .replace(R.id.content_frame, RcHomeFragment())
             .commit()
@@ -38,7 +51,6 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         val toggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
-            toolbar,
             R.string.open,
             R.string.close
         )
@@ -47,11 +59,10 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         // Sync state of toggle with drawerLayout
         toggle.syncState()
 
-        // Disable the default action bar
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        // show the navigation icon
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Show the navigation icon
+        // Set navigation item selected listener to navigationView
         navigationView.setNavigationItemSelectedListener(this)
     }
 
@@ -89,7 +100,7 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                     .replace(R.id.content_frame, RcHomeFragment())
                     .commit()
             }
-            R.id.nav_recieved -> {
+            R.id.nav_received -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.content_frame, RcClaimedFragment())
                     .commit()
@@ -100,12 +111,25 @@ class RcHomePage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                     .commit()
             }
             R.id.nav_logout -> {
+                // Update the shared preferences to indicate that the user is not logged in
+                updateLoggedInModuleStatus("Receiver",false)
+                FirebaseAuth.getInstance().signOut()
+                // Finish the current activity
+                val intent = Intent(this, OnboardScreen::class.java)
+                startActivity(intent)
                 finish()
             }
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    private fun onReceiverLoginSuccess() {
+        // Call updateLoggedInReceiverStatus() to set the boolean flag to true
+        updateLoggedInModuleStatus("Receiver",true)
+    }
+    override fun onBackPressed() {
+        doubleBackToExit()
     }
 }
 

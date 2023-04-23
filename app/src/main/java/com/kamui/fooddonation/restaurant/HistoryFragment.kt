@@ -40,8 +40,8 @@ class HistoryFragment : Fragment() {
         ) { tab, position ->
             when (position) {
                 0 -> tab.text = "Pending"
-                1 -> tab.text = "Accepted"
-                2 -> tab.text = "Previous"
+                1 -> tab.text = "Approved"
+                2 -> tab.text = "Accepted"
             }
         }.attach()
 

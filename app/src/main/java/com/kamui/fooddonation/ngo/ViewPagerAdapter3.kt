@@ -15,7 +15,7 @@ class ViewPagerAdapter3(fragmentManager: FragmentManager, lifecycle: Lifecycle)
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> MyRequestFragment()
+            0 -> DonationsFragment()
             1 -> NgoRequestFragment()
             else -> Fragment()
         }

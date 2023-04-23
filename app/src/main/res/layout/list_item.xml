@@ -2,80 +2,126 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/donation_title"
+        <!-- Add horizontal line -->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Title"
-            android:textSize="18sp" />
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/red_200"/>
 
         <TextView
             android:id="@+id/donor_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Donor Name"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/donation_pickup_address"
+            android:id="@+id/receiver_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donation Address"
-            android:textSize="16sp" />
+            android:text="Receiver 1"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Donor Away"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/donation_pickup_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pickup Address"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/donation_dest_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donation Address"
-            android:textSize="16sp" />
+            android:text="Destination Address"
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/donation_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Status"
-            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/claimed_by"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Volunteer 1"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/donation_food_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pizza"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/food_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5kg"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/food_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Veg"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/expiryDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="22/12/2023"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/donation_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donation Status"
+            android:textSize="20sp" />
+
+        <!-- Add horizontal line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/red_200"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/claim_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Claim" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="5dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/claim_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Claim" />
     <Button
         android:id="@+id/track_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="Track" />
 
     </LinearLayout>
-
 </LinearLayout>

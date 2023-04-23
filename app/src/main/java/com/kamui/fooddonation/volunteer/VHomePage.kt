@@ -1,22 +1,32 @@
 package com.kamui.fooddonation.volunteer
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.data.VolunteerData
 import com.kamui.fooddonation.restaurant.ViewPagerAdapter
 
-class VHomePage : AppCompatActivity() {
+class VHomePage : BaseActivity() {
 
+        @RequiresApi(Build.VERSION_CODES.P)
         @SuppressLint("MissingInflatedId")
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_v_home_page)
+            onVolunteerLoginSuccess()
+            FireStoreClass().getUserData("volunteer", VolunteerData::class.java){ userData ->
+                val volunteerName= userData?.name.toString()
+                // Set the title of the activity
+                supportActionBar?.title = "Welcome $volunteerName"
 
-            // Set the title of the activity
-            supportActionBar?.title = "Volunteer Name"
+            }
 
             // Set up the ViewPager to display the restaurant menu items
             val viewPager = findViewById<ViewPager2>(R.id.viewPager)
@@ -49,6 +59,10 @@ class VHomePage : AppCompatActivity() {
                 }
             })
         }
+    private fun onVolunteerLoginSuccess() {
+        // Call updateLoggedInNgoStatus() to set the boolean flag to true
+        updateLoggedInModuleStatus("Volunteer",true)
+    }
     }
 
 

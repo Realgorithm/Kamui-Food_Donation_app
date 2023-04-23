@@ -2,32 +2,45 @@ package com.kamui.fooddonation.ngo
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.OnboardScreen
 import com.kamui.fooddonation.R
 import com.kamui.fooddonation.restaurant.AccountFragment
 
 
-class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener {
 
-    // Initialize drawerLayout, toolbar and navigationView
+    // Initialize drawerLayout and navigationView
     private lateinit var drawerLayout: DrawerLayout
-//    private lateinit var toolbar:Toolbar
     private lateinit var navigationView:NavigationView
     private lateinit var profile:ImageView
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nhome_page)
 
-        // Set drawerLayout, navigationView and toolbar using findViewById
+        onNgoLoginSuccess()
+        // Get the menu item color from resources
+        val menuItemColor = ContextCompat.getColorStateList(this, R.color.red_200)
+        // Get the selected menu item color from resources
+        val selectedMenuItemColor = ContextCompat.getColorStateList(this, R.color.black)
+
+        // Set drawerLayout, navigationView using findViewById
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
 
@@ -45,13 +58,12 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
 
         // Select the item with ID R.id.r_requests
         val menu = navigationView.menu
-        val requestsItem = menu.findItem(R.id.n_requests)
+        val requestsItem = menu.findItem(R.id.ngo_home)
         requestsItem.isChecked = true
         navigationView.setCheckedItem(R.id.records)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.content_frame, NgoRequest())
+            .replace(R.id.content_frame, NgoHomeFragment())
             .commit()
-//        toolbar = findViewById(R.id.toolbar)
 
         // Initialize toggle to open and close drawer
         val toggle = ActionBarDrawerToggle(
@@ -61,13 +73,20 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
         drawerLayout.addDrawerListener(toggle)
         // Sync state of toggle with drawerLayout
         toggle.syncState()
+
+        // Set hamburger icon color based on app theme
+        if (isDarkMode()) {
+            toggle.drawerArrowDrawable.color = Color.WHITE
+        } else {
+            toggle.drawerArrowDrawable.color = Color.RED
+            navigationView.itemTextColor = ColorStateList.valueOf(Color.RED)
+        }
+
         // Show the navigation icon
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // Set navigation item selected listener to navigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-//        toolbar.setNavigationOnClickListener{ toggleDrawer() }
-//        toolbar.setNavigationIcon(R.drawable.mobile_login_bro)
     }
 
     // Override onOptionsItemSelected to handle drawer open and close actions
@@ -86,12 +105,13 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
         }
     }
 
+
     // Override onBackPressed to handle drawer close action
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            doubleBackToExit()
         }
     }
 
@@ -109,16 +129,10 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
 
         when (item.itemId) {
             // handle navigation item clicks here
-            R.id.r_requests -> {
+            R.id.ngo_home -> {
                 // Create intent to start AHomePage activity and start the activity
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, RRequest())
-                    .commit()
-            }
-            R.id.n_requests -> {
-                // Create intent to start AHomePage activity and start the activity
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, NgoRequest())
+                    .replace(R.id.content_frame, NgoHomeFragment())
                     .commit()
             }
             R.id.m_employee -> {
@@ -134,13 +148,22 @@ class NHomePage : AppCompatActivity(),NavigationView.OnNavigationItemSelectedLis
                     .commit()
             }
             R.id.logout -> {
-                // Create intent to start AHomePage activity and start the activity
+                // Update the shared preferences to indicate that the user is not logged in
+                updateLoggedInModuleStatus("Ngo",false)
+                FirebaseAuth.getInstance().signOut()
+                // Finish the current activity
+                val intent = Intent(this, OnboardScreen::class.java)
+                startActivity(intent)
                 finish()
             }
         }
         // Close the drawer
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    private fun onNgoLoginSuccess() {
+        // Call updateLoggedInNgoStatus() to set the boolean flag to true
+        updateLoggedInModuleStatus("Ngo",true)
     }
 }
 

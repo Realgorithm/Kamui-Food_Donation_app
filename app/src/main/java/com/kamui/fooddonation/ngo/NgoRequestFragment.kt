@@ -1,15 +1,41 @@
 package com.kamui.fooddonation.ngo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.CalendarView
+import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.data.NgoData
+import com.kamui.fooddonation.volunteer.DonationAdapter
 
 class NgoRequestFragment : Fragment() {
+    private var ngosList= ArrayList<NgoData>()
+    private lateinit var ngoAdapter: NgoAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyView: TextView
+
+    // Initialize adapter for calendar Spinner
+    private val calendarAdapter: ArrayAdapter<String> by lazy {
+        ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            ArrayList<String>().apply { add("Select Date") }
+        ).apply {
+            setDropDownViewResource(R.layout.calendar_dropdown_item)
+        }
+    }
 
     // Companion object to create a new instance of the fragment
     companion object {
@@ -18,6 +44,7 @@ class NgoRequestFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,16 +52,74 @@ class NgoRequestFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.ngo_request_fragment, container, false)
 
-        // Get a reference to the CalendarView
+        // Find views by id
+        val calendarSpinner = view.findViewById<Spinner>(R.id.calendar_spinner)
         val calendarView = view.findViewById<CalendarView>(R.id.calendar_view)
+        emptyView = view.findViewById(R.id.empty_view)
+        // Initialize the RecyclerView and the adapter
+        recyclerView = view.findViewById(R.id.recycler_view)
+        ngoAdapter = NgoAdapter(requireContext(), ngosList, this)
+        // Set up adapter for calendar Spinner
+        calendarSpinner.adapter = calendarAdapter
 
-        // Set a listener to handle date changes
-        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            // Do something with the selected date
-            // For example, show the selected date in a toast message
-            val selectedDate = "$dayOfMonth/${month + 1}/$year"
-            Toast.makeText(requireContext(), "Selected date: $selectedDate", Toast.LENGTH_SHORT).show()
+        // Set the layout manager and the adapter for the RecyclerView
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = ngoAdapter
+
+        getNgoData()
+        // Hide the calendar view
+        calendarView.visibility = View.GONE
+
+        // Set listener for when Spinner is clicked
+        calendarSpinner.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                calendarView.visibility =
+                    if (calendarView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                Log.d("calendars","Value ${calendarView.visibility}")
+                true
+            } else {
+                false
+            }
+        }
+
+        // Set listener for when date is selected in calendar
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            // Update the Spinner text to show the selected date
+            val dateString = "$dayOfMonth/${month + 1}/$year"
+            calendarAdapter.clear()
+            calendarAdapter.add(dateString)
+            calendarAdapter.notifyDataSetChanged()
+
+            // Hide the calendar view
+            calendarView.visibility = View.GONE
         }
         return view
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getNgoData(){
+        val currentNgoId = FireStoreClass().getCurrentUserID()
+
+        FireStoreClass().getAllNGOsExceptCurrentNGO(currentNgoId,
+            onSuccess = { ngos ->
+                ngosList.clear()
+                ngosList.addAll(ngos)
+                ngoAdapter.notifyDataSetChanged()
+                if(ngosList.isNotEmpty()){
+                    recyclerView.visibility=View.VISIBLE
+                    emptyView.visibility=View.GONE
+                }
+                else{
+                    recyclerView.visibility=View.GONE
+                    emptyView.visibility =View.VISIBLE
+                }
+            },
+            onFailure = { exception ->
+                // Handle the failure case
+                Toast.makeText(requireContext()," Error $exception",Toast.LENGTH_SHORT).show()
+
+            }
+        )
+
     }
 }
