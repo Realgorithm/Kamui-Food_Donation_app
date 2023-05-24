@@ -3,7 +3,7 @@ package com.kamui.fooddonation.volunteer
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
@@ -22,9 +22,9 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
 import com.kamui.fooddonation.data.Donation
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
@@ -32,7 +32,6 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.io.IOException
 import java.util.Locale
 
@@ -40,7 +39,6 @@ class TrackFragment : BassFragment() {
     private val donationsList = ArrayList<Donation>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var donationAdapter: DonationAdapter
-    private var userMarker: Marker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,10 +46,12 @@ class TrackFragment : BassFragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_track, container, false)
+
         // Initialize the RecyclerView and the adapter
         recyclerView = view.findViewById(R.id.recycler_view)
         showProgressDialog("Fetching Data")
-// Set the layout manager and the adapter for the RecyclerView
+
+        // Set the layout manager and the adapter for the RecyclerView
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         // Load the donations from the server
@@ -67,7 +67,7 @@ class TrackFragment : BassFragment() {
                 getDonationList()
             }
             .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error querying donations", e)
+                Log.w(TAG, "Error querying donations", e)
             }
 
         donationAdapter = DonationAdapter(requireContext(), donationsList,this)
@@ -79,12 +79,12 @@ class TrackFragment : BassFragment() {
             override fun onTrackClick(position: Int) {
                 // Get the selected donation
                 val selectedDonation = donationsList[position]
-                val geocoder = Geocoder(requireContext())
+                Geocoder(requireContext())
                 val donorAddress = selectedDonation.pickupAddress
                 val receiverAddress = selectedDonation.destAddress
 
                 if (donorAddress != null && receiverAddress != null) {
-Log.d("Inside ","come inside")
+                    Log.d("Inside ","come inside")
                     val donorLocation = GeoPoint(donorAddress.latitude, donorAddress.longitude)
                     val receiverLocation = GeoPoint(receiverAddress.latitude, receiverAddress.longitude)
                     val dialogView = LayoutInflater.from(requireContext())
@@ -96,7 +96,7 @@ Log.d("Inside ","come inside")
 
                     // Initialize userMarker and userLocation variables
                     var userMarker: Marker? = null
-                    var userLocation: GeoPoint? = null
+                    var userLocation: GeoPoint?
 
                     val closeButton = dialogView.findViewById<Button>(R.id.closeButton)
                     val deliverButton = dialogView.findViewById<Button>(R.id.deliverButton)
@@ -120,6 +120,32 @@ Log.d("Inside ","come inside")
                                     FireStoreClass().updateDonationStatus(
                                         it1,"delivered"){
                                         Toast.makeText(requireContext(),"Donation delivered successfully",Toast.LENGTH_SHORT).show()
+
+                                        val db = FirebaseFirestore.getInstance()
+                                        db.collection("donation")
+                                            .addSnapshotListener { snapshot, e ->
+                                                if (e != null) {
+                                                    Log.w(TAG, "Listen failed.", e)
+                                                    return@addSnapshotListener
+                                                }
+
+                                                for (doc in snapshot!!.documents) {
+                                                    val status = doc.getString("status")
+                                                    if (status == "delivered") {
+                                                        db.collection("donations").document(doc.id).update("reward","1")
+                                                        // Delete the document with the matching ID
+                                                        db.collection("donations").document(doc.id)
+                                                            .delete()
+                                                            .addOnSuccessListener {
+                                                                Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                                                            }
+                                                            .addOnFailureListener { error ->
+                                                                Log.w(TAG, "Error deleting document", error)
+                                                            }
+                                                    }
+                                                }
+                                            }
+
                                     }
                                 }
                                 deliverButton.text="Delivered"
@@ -217,13 +243,6 @@ Log.d("Inside ","come inside")
                         })
                     }
                     dialog.show()
-
-//                    // Show the dialog
-//                    val builderAlert = AlertDialog.Builder(requireContext())
-//                        .setView(dialogView)
-//                        .setCancelable(false)
-//                    val dialog = builderAlert.create()
-//                    dialog.show()
 
                 } else {
                     Toast.makeText(requireContext(), "Unable to get donation location.", Toast.LENGTH_SHORT).show()

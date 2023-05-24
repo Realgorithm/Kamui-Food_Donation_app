@@ -3,7 +3,6 @@ package com.kamui.fooddonation.ngo
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
@@ -12,13 +11,15 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.data.Employee
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 
@@ -50,9 +51,15 @@ class AddEmployee : BaseActivity() {
         empName = findViewById(R.id.et_emp_name)
         empContactNo = findViewById(R.id.et_contact_no)
 
+        val empNameLabel = findViewById<TextView>(R.id.tv_emp_name)
+val empContactLabel= findViewById<TextView>(R.id.tv_contact_no)
+
         // Find ImageView and set default image
         imageView = findViewById(R.id.imageView)
-        imageView.setImageResource(R.drawable.mercy_04);
+        imageView.setImageResource(R.drawable.mercy_04)
+
+        setOnFocusChangeListener(empName,"Employee Name",empNameLabel)
+        setOnFocusChangeListener(empContactNo,"Contact Number",empContactLabel)
 
         // Find Select Image Button and set click listener to launch image selection activity
         val selectImageButton: Button = findViewById(R.id.select_image_button)
@@ -96,7 +103,7 @@ class AddEmployee : BaseActivity() {
         // Get a reference to the employees collection in Firestore
         val db = FirebaseFirestore.getInstance()
         val employeesCollection = db.collection("employees")
-
+        val currentUserId =FireStoreClass().getCurrentUserID()
         // Create a new employee object with the provided details
         val employee = Employee(
             name = empName,
@@ -132,6 +139,7 @@ class AddEmployee : BaseActivity() {
                             .addOnSuccessListener { querySnapshot ->
                                 val id = querySnapshot.size() + 1
                                 employee.id = id.toString()
+                                employee.ngoId =currentUserId
 
                                 // Add the employee object to Firestore
                                 employeesCollection.add(employee)
@@ -161,6 +169,7 @@ class AddEmployee : BaseActivity() {
                 .addOnSuccessListener { querySnapshot ->
                     val id = querySnapshot.size() + 1
                     employee.id = id.toString()
+                    employee.ngoId =currentUserId
 
                     employeesCollection.add(employee)
                         .addOnSuccessListener { documentReference ->

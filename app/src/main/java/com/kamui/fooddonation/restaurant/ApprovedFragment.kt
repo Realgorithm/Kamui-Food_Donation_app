@@ -14,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.volunteer.DonationAdapter
 
@@ -49,7 +49,7 @@ class ApprovedFragment : BassFragment() {
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener {
-                Log.d("PendingData", currentUserUid.toString())
+                Log.d("PendingData", currentUserUid)
                 getDonationList()
             }
             .addOnFailureListener { e ->
@@ -85,16 +85,6 @@ class ApprovedFragment : BassFragment() {
                 Log.e("Firestore", "Error listening for donation updates", error)
             }
         )
-
-//        FireStoreClass().getAllDonations { donations ->
-//            // Update the donationsList with the retrieved data
-//            donationsList.clear()
-//            donationsList.addAll(donations)
-//            hideProgressDialog()
-//
-//            // Notify the adapter that the data set has changed
-//            recyclerViewDonations.adapter?.notifyDataSetChanged()
-//        }
     }
     }
 

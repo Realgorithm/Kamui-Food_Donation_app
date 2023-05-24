@@ -2,8 +2,6 @@ package com.kamui.fooddonation.ngo
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,20 +15,16 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.data.NgoData
-import com.kamui.fooddonation.data.ReceiverData
 import com.kamui.fooddonation.volunteer.DonationAdapter
-import java.io.IOException
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 class DonationsFragment : BassFragment() {
     private lateinit var selectedDate: Date
@@ -63,6 +57,7 @@ class DonationsFragment : BassFragment() {
 
         selectedDate = Date()
 
+        val userUid = FireStoreClass().getCurrentUserID()
         // Find views by id
         val calendarSpinner = view.findViewById<Spinner>(R.id.calendar_spinner)
         val calendarView = view.findViewById<CalendarView>(R.id.calendar_view)
@@ -72,10 +67,21 @@ class DonationsFragment : BassFragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         donationAdapter = DonationAdapter(requireContext(), donationsList, this)
 
-//        getDonationList()
 
         // Set up adapter for calendar Spinner
         calendarSpinner.adapter = calendarAdapter
+
+        // Get the current date
+        val currentDate = Calendar.getInstance()
+
+        // Set the Spinner text to show the current date
+        val dateValue = "${currentDate.get(Calendar.DAY_OF_MONTH)}/${currentDate.get(Calendar.MONTH) + 1}/${currentDate.get(Calendar.YEAR)}"
+        calendarAdapter.clear()
+        calendarAdapter.add(dateValue)
+        calendarAdapter.notifyDataSetChanged()
+
+        // Get donations for the current date
+        getDonationList(currentDate.time)
 
         // Set the layout manager and the adapter for the RecyclerView
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -98,6 +104,10 @@ class DonationsFragment : BassFragment() {
 
         // Set listener for when date is selected in calendar
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            // Update the selected date
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, dayOfMonth)
+
             // Update the Spinner text to show the selected date
             val dateString = "$dayOfMonth/${month + 1}/$year"
             calendarAdapter.clear()
@@ -109,10 +119,9 @@ class DonationsFragment : BassFragment() {
 
             showProgressDialog("Fetching Data")
             // Get donations for selected date
-            val selectedDates = Calendar.getInstance()
-            selectedDates.set(year, month, dayOfMonth)
-            getDonationList(selectedDates.time)
+            getDonationList(selectedDate.time)
         }
+
         // Set the listener for the "Claim" button in the adapter
         donationAdapter.setOnClaimClickListener(object : DonationAdapter.OnClaimClickListener {
             @RequiresApi(Build.VERSION_CODES.P)
@@ -146,7 +155,7 @@ class DonationsFragment : BassFragment() {
                 builder.setMessage("Are you sure you want to claim this donation?")
                 builder.setPositiveButton("Yes") { _, _ ->
                     // Get the current user's display name
-                    FireStoreClass().getUserData("ngo", NgoData::class.java) { userData ->
+                    FireStoreClass().getUserData("ngo", NgoData::class.java,userUid) { userData ->
                         val receiverName = userData?.name.toString()
                         val destLocation = userData?.location
                         val ngoAddress = userData?.ngoAddress.toString()
@@ -157,9 +166,9 @@ class DonationsFragment : BassFragment() {
                                 if(ngoAddress!="") {
                                     FireStoreClass().updateReceiverInfo(
                                         selectedDonation.donationId!!, receiverName, destLocation,
-                                        receiverId, ngoAddress.trim()
+                                        receiverId, ngoAddress
                                     ) {
-                                        Log.d("receiverAddress", ngoAddress.trim())
+                                        Log.d("receiverAddress", ngoAddress)
                                         // Update the status of the donation to "availableForVol"
                                         selectedDonation.status = "availableForVol"
                                         Toast.makeText(
@@ -198,7 +207,7 @@ class DonationsFragment : BassFragment() {
         endDate.set(Calendar.MINUTE, 59)
         endDate.set(Calendar.SECOND, 59)
 
-        FireStoreClass().getDonationsByDateRange("approved",startDate.time, endDate.time) { donations ->
+        FireStoreClass().getDonationsByDateRange(startDate.time, endDate.time,){ donations ->
             if (donations != null) {
                 donationsList.clear()
                 donationsList.addAll(donations)
@@ -213,10 +222,11 @@ class DonationsFragment : BassFragment() {
                     recyclerView.visibility = View.GONE
                 }
                 hideProgressDialog()
-            } else {
-                Toast.makeText(requireContext(), "Error retrieving donations", Toast.LENGTH_SHORT).show()
-                hideProgressDialog()
             }
+            else{
+                Toast.makeText(requireContext(),"Error occured while trying to get donations",Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 }

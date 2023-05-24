@@ -3,9 +3,7 @@ package com.kamui.fooddonation.restaurant
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.kamui.fooddonation.restaurant.AccountFragment
-import com.kamui.fooddonation.restaurant.HistoryFragment
-import com.kamui.fooddonation.restaurant.HomeFragment
+import com.kamui.fooddonation.AccountFragment
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
@@ -19,7 +17,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
         return when (position) {
             0 -> HomeFragment()
             1 -> HistoryFragment()
-            2 -> AccountFragment()
+            2 -> AccountFragment.newInstance("RHomePage")
             else -> Fragment()
         }
     }

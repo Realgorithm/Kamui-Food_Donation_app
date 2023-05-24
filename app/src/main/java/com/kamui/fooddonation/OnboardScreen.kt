@@ -3,7 +3,6 @@ package com.kamui.fooddonation
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -11,6 +10,7 @@ import android.view.animation.AlphaAnimation
 import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.kamui.fooddonation.admin.ALoginPage
 import com.kamui.fooddonation.ngo.NLoginPage
@@ -18,7 +18,7 @@ import com.kamui.fooddonation.receiver.RcLoginPage
 import com.kamui.fooddonation.restaurant.RloginPage
 import com.kamui.fooddonation.volunteer.VLoginPage
 
-class OnboardScreen : AppCompatActivity() {
+class OnboardScreen : BaseActivity() {
 
     private lateinit var button1: Button
     private lateinit var button2: Button
@@ -49,20 +49,28 @@ class OnboardScreen : AppCompatActivity() {
         val handler = Handler()
         val runnable = object : Runnable {
             var count = 0
+
             @SuppressLint("SetTextI18n")
             override fun run() {
                 when (count % 3) {
                     0 -> {
                         textView.text = "40% of india's food ends up in the bin."
-                        textView2.text = "When we waste food, we waste the opportunity to feed a hungry person."
+                        textView2.text =
+                            "When we waste food, we waste the opportunity to feed a hungry person."
                     }
+
                     1 -> {
-                        textView.text = "Reflect, \nRethink,\nReconsider.\nWhy Food waste is major problem"
-                        textView2.text = "Approximately 690 million people in the world go hungry, which is about 9% of the global population"
+                        textView.text =
+                            "Reflect, \nRethink,\nReconsider.\nWhy Food waste is major problem"
+                        textView2.text =
+                            "Approximately 690 million people in the world go hungry, which is about 9% of the global population"
                     }
+
                     2 -> {
-                        textView.text = "Wasting food is like stealing from the table of those who are poor and hungry"
-                        textView2.text = "The amount of food wasted in wealthy countries is roughly equivalent to the entire net food production of sub-Saharan Africa"
+                        textView.text =
+                            "Wasting food is like stealing from the table of those who are poor and hungry"
+                        textView2.text =
+                            "The amount of food wasted in wealthy countries is roughly equivalent to the entire net food production of sub-Saharan Africa"
                     }
 
                 }
@@ -90,7 +98,7 @@ class OnboardScreen : AppCompatActivity() {
             val center = scrollView.width / 2
             val position = scrollView.scrollX + center
 
-            Log.d("tabish","value $position")
+            Log.d("tabish", "value $position")
 
             if (position < button1.left) {
                 scrollView.smoothScrollTo(button1.left, 0)
@@ -125,26 +133,30 @@ class OnboardScreen : AppCompatActivity() {
         button4.startAnimation(fadeInAnimation)
         button5.startAnimation(fadeInAnimation)
 
-        button1.setOnClickListener{
+        if (!isInternetAvailable(this)) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
+        } else {
+            button1.setOnClickListener {
 //            val intent = Intent(this, NLoginPage::class.java)
-            val intent = Intent(this, NLoginPage::class.java)
-            startActivity(intent)
-        }
-        button2.setOnClickListener{
-            val intent = Intent(this, RcLoginPage::class.java)
-            startActivity(intent)
-        }
-        button3.setOnClickListener{
-            val intent = Intent(this, VLoginPage::class.java)
-            startActivity(intent)
-        }
-        button4.setOnClickListener{
-            val intent = Intent(this, RloginPage::class.java)
-            startActivity(intent)
-        }
-        button5.setOnClickListener{
-            val intent = Intent(this, ALoginPage::class.java)
-            startActivity(intent)
+                val intent = Intent(this, NLoginPage::class.java)
+                startActivity(intent)
+            }
+            button2.setOnClickListener {
+                val intent = Intent(this, RcLoginPage::class.java)
+                startActivity(intent)
+            }
+            button3.setOnClickListener {
+                val intent = Intent(this, VLoginPage::class.java)
+                startActivity(intent)
+            }
+            button4.setOnClickListener {
+                val intent = Intent(this, RloginPage::class.java)
+                startActivity(intent)
+            }
+            button5.setOnClickListener {
+                val intent = Intent(this, ALoginPage::class.java)
+                startActivity(intent)
+            }
         }
     }
 

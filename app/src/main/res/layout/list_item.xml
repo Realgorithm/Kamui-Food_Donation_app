@@ -22,35 +22,35 @@
             android:id="@+id/donor_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donor Name"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/receiver_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Receiver 1"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donor Away"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/donation_pickup_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pickup Address"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/donation_dest_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Destination Address"
+            android:text=""
             android:textSize="20sp" />
 
 
@@ -58,42 +58,42 @@
             android:id="@+id/claimed_by"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Volunteer 1"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/donation_food_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pizza"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/food_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="5kg"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/food_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Veg"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/expiryDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="22/12/2023"
+            android:text=""
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/donation_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donation Status"
+            android:text=""
             android:textSize="20sp" />
 
         <!-- Add horizontal line -->
@@ -115,13 +115,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Claim" />
+            android:text="@string/claim"
+            style="?android:attr/buttonBarButtonStyle" />
     <Button
         android:id="@+id/track_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Track" />
+        android:text="@string/track"
+        style="?android:attr/buttonBarButtonStyle" />
 
     </LinearLayout>
 </LinearLayout>

@@ -6,8 +6,13 @@ import com.google.firebase.firestore.GeoPoint
 
 data class ReceiverData(
     val role: String? ="",
+    val id: String?="",
+    val fcmToken: String?= "",
+    val rewardPoint:String?="",
+    val imageUri:String ? = "",
     val name: String? ="",
     val email: String? ="",
+    val address: String?="",
     val location: GeoPoint? = null,
     val phone: String? ="",
     val pickupTime: String? ="",
@@ -16,6 +21,11 @@ data class ReceiverData(
 ): Parcelable
 {
     constructor(parcel: Parcel):this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -28,8 +38,13 @@ data class ReceiverData(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(role)
+        parcel.writeString(id)
+        parcel.writeString(fcmToken)
+        parcel.writeString(rewardPoint)
+        parcel.writeString(imageUri)
         parcel.writeString(name)
         parcel.writeString(email)
+        parcel.writeString(address)
         parcel.writeValue(location)
         parcel.writeString(phone)
         parcel.writeString(pickupTime)

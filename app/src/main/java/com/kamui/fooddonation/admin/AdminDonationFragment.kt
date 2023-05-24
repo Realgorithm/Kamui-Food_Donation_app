@@ -3,8 +3,6 @@ package com.kamui.fooddonation.admin
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,12 +14,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.volunteer.DonationAdapter
-import java.io.IOException
-import java.util.Locale
 
 
 class AdminDonationFragment : BassFragment() {
@@ -124,22 +121,4 @@ class AdminDonationFragment : BassFragment() {
             }
         )
     }
-
-//    private fun getDonationList() {
-//        FireStoreClass().listenForDonationUpdates(
-//
-//            onUpdate = { donations ->
-//                // Update the adapter with the new donations data
-////                donationsList.clear()
-//                donationsList.addAll(donations)
-//                donationListAdapter.updateDonations(donations)
-//                hideProgressDialog()
-//            },
-//            onError = { error ->
-//                // Handle the error, for example by displaying an error message
-//                Toast.makeText(requireContext(), "Error listening for donation updates", Toast.LENGTH_SHORT).show()
-//                Log.e("Firestore", "Error listening for donation updates", error)
-//            }
-//        )
-//    }
 }

@@ -6,12 +6,11 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
+import com.kamui.fooddonation.AccountFragment
 import com.kamui.fooddonation.BaseActivity
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
 import com.kamui.fooddonation.data.VolunteerData
-import com.kamui.fooddonation.restaurant.ViewPagerAdapter
 
 class VHomePage : BaseActivity() {
 
@@ -21,10 +20,16 @@ class VHomePage : BaseActivity() {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_v_home_page)
             onVolunteerLoginSuccess()
-            FireStoreClass().getUserData("volunteer", VolunteerData::class.java){ userData ->
+            val userUid=FireStoreClass().getCurrentUserID()
+            FireStoreClass().getUserData("volunteer", VolunteerData::class.java,userUid){ userData ->
                 val volunteerName= userData?.name.toString()
                 // Set the title of the activity
                 supportActionBar?.title = "Welcome $volunteerName"
+
+                val accountFragment = AccountFragment()
+                val bundle =Bundle()
+                bundle.putString("previousActivity","VHomePage")
+                accountFragment.arguments=bundle
 
             }
 
@@ -46,6 +51,7 @@ class VHomePage : BaseActivity() {
                     }
                     R.id.acc -> {
                         viewPager.currentItem = 2
+
                         true
                     }
                     else -> false

@@ -2,22 +2,28 @@
 package com.kamui.fooddonation.restaurant
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.google.firebase.Timestamp
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.kamui.fooddonation.BaseActivity
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
@@ -25,12 +31,34 @@ import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.data.RestaurantData
 import java.io.IOException
 import java.util.Locale
+import java.util.UUID
 
 class RAddRequest : BaseActivity() {
 
     private val datePattern = "^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/\\d{4}$"
     private val validFoodTypes = listOf("veg", "non-veg", "perishable", "non-perishable")
-    @SuppressLint("MissingInflatedId")
+    private lateinit var imageView: ImageView
+    private var selectedBitmap: Bitmap? = null
+
+    // Create Activity Result Launcher for selecting images
+    private val imageSelectionLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            selectedBitmap = getBitmapFromUri(uri)
+            imageView.setImageBitmap(selectedBitmap)
+        }
+    }
+
+    private fun getBitmapFromUri(uri: Uri): Bitmap? {
+        return try {
+            val inputStream = contentResolver.openInputStream(uri)
+            BitmapFactory.decodeStream(inputStream)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +74,15 @@ class RAddRequest : BaseActivity() {
 
         title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
 
-//        supportActionBar?.title = "Add Food Request"
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set up the listeners for the food item edit text fields
+        // Find ImageView and set default image
+        imageView = findViewById(R.id.imageView)
+        imageView.setImageResource(R.drawable.mercy_04)
+        imageView.setOnClickListener {
+            // Launch image selection activity
+            imageSelectionLauncher.launch("image/*")
+        }
         val foodNameInput = findViewById<EditText>(R.id.food_name_input)
         val foodNameLabel = findViewById<TextView>(R.id.foodNameLabel)
         val foodTypeInput = findViewById<EditText>(R.id.foodTypeInput)
@@ -60,50 +93,11 @@ class RAddRequest : BaseActivity() {
         val expirationDateInput = findViewById<EditText>(R.id.expirationDateInput)
         val expirationDateLabel = findViewById<TextView>(R.id.expirationDateLabel)
 
-        foodNameInput.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                // If the focus is lost, show the hint text and hide the label
-                foodNameInput.hint = "Food Name"
-                foodNameLabel.visibility = View.GONE
-            } else {
-                // If the focus is gained, hide the hint text and show the label
-                foodNameInput.hint = ""
-                foodNameLabel.visibility = View.VISIBLE;
-            }
-        }
-        foodTypeInput.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                // If the focus is lost, show the hint text and hide the label
-                foodTypeInput.hint = "Food Type"
-                foodTypeLabel.visibility = View.GONE
-            } else {
-                // If the focus is gained, hide the hint text and show the label
-                foodTypeInput.hint = ""
-                foodTypeLabel.visibility = View.VISIBLE;
-            }
-        }
-        quantityInput.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // If the focus is gained, hide the hint text and show the label
-                quantityInput.hint = ""
-                quantityLabel.visibility = View.VISIBLE;
-            } else {
-                // If the focus is lost, show the hint text and hide the label
-                quantityInput.hint = "Quantity"
-                quantityLabel.visibility = View.GONE;
-            }
-        }
-        expirationDateInput.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                // If the focus is gained, hide the hint text and show the label
-                expirationDateInput.hint = ""
-                expirationDateLabel.visibility = View.VISIBLE;
-            } else {
-                // If the focus is lost, show the hint text and hide the label
-                expirationDateInput.hint = "Expiry Date"
-                expirationDateLabel.visibility = View.GONE;
-            }
-        }
+        setOnFocusChangeListener(foodNameInput, "Food Name", foodNameLabel)
+        setOnFocusChangeListener(foodTypeInput, "Food Type", foodTypeLabel)
+        setOnFocusChangeListener(quantityInput, "Quantity", quantityLabel)
+        setOnFocusChangeListener(expirationDateInput, "Expiry Date", expirationDateLabel)
+
 
         val foodTypes = arrayOf("kg", "litre", "piece", "slices")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, foodTypes)
@@ -122,6 +116,7 @@ class RAddRequest : BaseActivity() {
             val textExpirationDate = expirationDateInput.text.toString()
             val moduleData = RestaurantData::class.java
             // replace with the actual user ID
+            val userUid =fireStoreClass.getCurrentUserID()
             val moduleCollection = "restaurant" // replace with the actual module collection name
             // Clear the input fields after the donation has been added
             if (validateForm(textFoodName, textFoodType, textFoodQuantity, textExpirationDate)) {
@@ -130,10 +125,12 @@ class RAddRequest : BaseActivity() {
                 foodTypeInput.text.clear()
                 quantityInput.text.clear()
                 expirationDateInput.text.clear()
-                fireStoreClass.getUserData(moduleCollection, moduleData) { userData ->
+                imageView.setImageResource(R.drawable.mercy_04)
+                fireStoreClass.getUserData(moduleCollection, moduleData,userUid) { userData ->
                     // handle the user data here
                     val restaurantName = userData?.restaurantName.toString()
                     val pickUpAddress = userData?.location!!
+                    userData.fcmToken
                     // Fetch the address from the latitude and longitude using geocoder
                     val geocoder = Geocoder(this, Locale.getDefault())
                     var addresses: List<Address?>? = null
@@ -163,8 +160,23 @@ class RAddRequest : BaseActivity() {
                         pickupDate = pickupDate.toDate()
                     )
                     // call the addDonation function with the Donation object and a completion block
-                    fireStoreClass.addDonation(donation) {
-                        // handle completion here
+                    fireStoreClass.addDonation(donation,selectedBitmap) {
+                        // Handle success
+                        val message = RemoteMessage.Builder("Admin-app")
+                            .setMessageId(UUID.randomUUID().toString())
+                            .setData(
+                                mapOf(
+                                    "title" to "New donation waiting for approval",
+                                    "body" to "Restaurant ${donation.donor} has made a new donation that needs to be approved",
+                                    "donationId" to donation.donationId,
+                                    "restaurantId" to donation.donorId
+                                )
+                            )
+                            .build()
+
+                        FirebaseMessaging.getInstance().send(message)
+
+
                         hideProgressDialog()
                         Toast.makeText(
                             this,
@@ -192,7 +204,7 @@ class RAddRequest : BaseActivity() {
                 showErrorSnackBar("Please filled every field")
                 false
             }
-            (!validFoodTypes.contains(textFoodType.toLowerCase(Locale.ROOT))) -> {
+            (!validFoodTypes.contains(textFoodType.lowercase(Locale.ROOT))) -> {
                 showErrorSnackBar("please enter valid food type eg.(veg, non-veg)")
                 false
             }
@@ -206,4 +218,5 @@ class RAddRequest : BaseActivity() {
         }
     }
 }
+
 

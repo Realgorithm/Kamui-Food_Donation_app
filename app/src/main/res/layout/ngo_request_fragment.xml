@@ -40,7 +40,7 @@
                 android:textSize="30sp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="No ngos available" />
+                android:text="@string/no_ngo_available" />
 
         </LinearLayout>
 

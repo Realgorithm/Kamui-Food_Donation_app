@@ -9,9 +9,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.kamui.fooddonation.admin.AdminDonationFragment
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.admin.AdminDonationFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.ngo.DonationsFragment
 import com.kamui.fooddonation.ngo.RecordFragment
@@ -19,6 +18,7 @@ import com.kamui.fooddonation.receiver.RcClaimedFragment
 import com.kamui.fooddonation.receiver.RcHomeFragment
 import com.kamui.fooddonation.restaurant.AcceptedFragment
 import com.kamui.fooddonation.restaurant.ApprovedFragment
+import com.kamui.fooddonation.restaurant.HomeFragment
 import com.kamui.fooddonation.restaurant.PendingFragment
 
 class DonationAdapter(
@@ -287,6 +287,7 @@ class DonationAdapter(
             is RcClaimedFragment -> configureForRcClaimedFragment(holder,donation)
             is DonationsFragment -> configureForRcHomeFragment(holder,donation)
             is RecordFragment ->configureForRcClaimedFragment(holder,donation)
+            is HomeFragment ->configureForPendingDonationList(holder,donation)
         }
 
         holder.claimButton.setOnClickListener {

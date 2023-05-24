@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.data.NgoData
+import com.kamui.fooddonation.restaurant.HomeFragment
 
 
 class NgoAdapter(
@@ -46,9 +46,13 @@ class NgoAdapter(
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ngos = ngosList[position]
+        val addressParts = ngos.ngoAddress?.split(",")
+        val locality =addressParts?.getOrNull(0)?.trim()
         when(fragment) {
             is NgoRequestFragment -> configureForNgoRequestFragment(holder, ngos)
+            is HomeFragment -> configureForHomeFragment(holder,ngos)
         }
+        holder.ngoAddress.text ="Address: $locality"
 
         holder.profileButton.setOnClickListener {
             onProfileClickListener?.onProfileClick(position)
@@ -58,13 +62,23 @@ class NgoAdapter(
     }
 
     @SuppressLint("SetTextI18n")
+    private fun configureForHomeFragment(holder:NgoAdapter.ViewHolder, ngos: NgoData) {
+        holder.itemView.visibility=View.GONE
+        if(ngos.ngoName!=""){
+            holder.itemView.visibility=View.VISIBLE
+            holder.profileButton.visibility =View.GONE
+            holder.ngoName.text =   "Ngo Name: ${ngos.ngoName}"
+            holder.ownerName.text =   "Name: ${ngos.name}"
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun configureForNgoRequestFragment(holder:ViewHolder, ngos: NgoData) {
         holder.itemView.visibility=View.GONE
         if(ngos.ngoName!=""){
             holder.itemView.visibility=View.VISIBLE
-            holder.ngoName.text =     "Ngo name:  ${ngos.ngoName}"
-            holder.ownerName.text = "Owner Name: ${ngos.name}"
-            holder.ngoAddress.text =        "Address:                ${ngos.ngoAddress}"
+            holder.ngoName.text =   "Ngo Name: ${ngos.ngoName}"
+            holder.ownerName.text = "Name: ${ngos.name}"
         }
     }
 

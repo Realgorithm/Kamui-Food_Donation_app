@@ -12,9 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.kamui.fooddonation.admin.AHomePage
 import com.kamui.fooddonation.data.AdminData
@@ -77,7 +75,7 @@ class SignInActivity : BaseActivity() {
             showProgressDialog(resources.getString(R.string.please_wait))
             auth.signInWithEmailAndPassword(textEmail, textPassword)
                 .addOnCompleteListener(this) { task ->
-                    hideProgressDialog()
+                    val userUid=FireStoreClass().getCurrentUserID()
                     if (task.isSuccessful) {
                         val (childCollection, childData) = when (intent.getStringExtra("previousActivity")) {
                             "RHomePage" -> "restaurant" to RestaurantData::class.java
@@ -91,7 +89,7 @@ class SignInActivity : BaseActivity() {
                         val userId = auth.currentUser?.uid
                         val email = auth.currentUser?.email
                         if (userId != null) {
-                            FireStoreClass().getUserData(childCollection, childData) { userData ->
+                            FireStoreClass().getUserData(childCollection, childData,userUid) { userData ->
                                 val emailMatch = userData?.let {
                                     when (userData) {
                                         is RestaurantData -> userData.email == email
@@ -117,11 +115,15 @@ class SignInActivity : BaseActivity() {
                                     startActivity(Intent(this, intentClass))
                                     finish()
                                 }
+                                else{
+                                    userNotFound?.show()
+                                }
                             }
                         }
                         else {
                             userNotFound?.show()
                         }
+                        hideProgressDialog()
                     }
                     else {
                         // If sign in fails, display a message to the user.
@@ -130,7 +132,7 @@ class SignInActivity : BaseActivity() {
                             baseContext, "Authentication failed.",
                             Toast.LENGTH_SHORT
                         ).show()
-
+                        hideProgressDialog()
                     }
                 }
         }

@@ -3,8 +3,6 @@ package com.kamui.fooddonation.volunteer
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.TimePickerDialog
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
@@ -20,12 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.data.VolunteerData
-import java.io.IOException
 import java.util.Calendar
-import java.util.Locale
 
 
 class VolHomeFragment : BassFragment() {
@@ -41,6 +37,7 @@ class VolHomeFragment : BassFragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.vol_fragment_home, container, false)
+        val userUid = FireStoreClass().getCurrentUserID()
         showProgressDialog("Fetching Data")
         emptyView = view.findViewById(R.id.empty_view)
         // Initialize the RecyclerView and the adapter
@@ -108,7 +105,7 @@ class VolHomeFragment : BassFragment() {
                                 // Do something with the deliver within input, such as store it
                                 val fireStoreClass = FireStoreClass()
                                 val currentUser = FireStoreClass().getCurrentUserID()
-                                fireStoreClass.getUserData("volunteer", VolunteerData::class.java) { userData ->
+                                fireStoreClass.getUserData("volunteer", VolunteerData::class.java,userUid) { userData ->
                                     val volunteerName = userData?.name.toString()
                                     selectedDonation.donationId?.let {
                                         FireStoreClass().updateDonationStatus(it, "claimedByVol") {
@@ -189,23 +186,23 @@ class VolHomeFragment : BassFragment() {
         )
     }
 
-    fun showDeliveryTimeBuilderDialog() {
-        val builderTime = AlertDialog.Builder(requireContext())
-        builderTime.setTitle("Deliver Within")
-
-        val deliveryTime = EditText(requireContext())
-        builderTime.setView(deliveryTime)
-
-        // Set up the buttons
-        builderTime.setPositiveButton("OK") { _, _ ->
-            val textDeliveryTime = deliveryTime.text.toString()
-            // Do something with the deliver within input, such as store it
-        }
-
-        builderTime.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-
-        builderTime.show()
-    }
+//    fun showDeliveryTimeBuilderDialog() {
+//        val builderTime = AlertDialog.Builder(requireContext())
+//        builderTime.setTitle("Deliver Within")
+//
+//        val deliveryTime = EditText(requireContext())
+//        builderTime.setView(deliveryTime)
+//
+//        // Set up the buttons
+//        builderTime.setPositiveButton("OK") { _, _ ->
+//            val textDeliveryTime = deliveryTime.text.toString()
+//            // Do something with the deliver within input, such as store it
+//        }
+//
+//        builderTime.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+//
+//        builderTime.show()
+//    }
 
 }
 

@@ -2,7 +2,7 @@ package com.kamui.fooddonation
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -22,31 +22,31 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kamui.fooddonation.admin.AHomePage
 import com.kamui.fooddonation.data.AdminData
 import com.kamui.fooddonation.data.NgoData
 import com.kamui.fooddonation.data.ReceiverData
 import com.kamui.fooddonation.data.RestaurantData
 import com.kamui.fooddonation.data.VolunteerData
-import com.kamui.fooddonation.databinding.DialogProgressBinding
 import com.kamui.fooddonation.ngo.NHomePage
 import com.kamui.fooddonation.receiver.RcHomePage
 import com.kamui.fooddonation.restaurant.RHomePage
 import com.kamui.fooddonation.volunteer.VHomePage
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.firebase.firestore.GeoPoint
 import java.util.Locale
 
 
-private operator fun Boolean.invoke(value: () -> Unit) {
+private operator fun Boolean.invoke() {
 
 }
 
 class SignupActivity : BaseActivity() {
-    private lateinit var mProgressDialog: Dialog
 
     //        common fields
     private lateinit var tvFirst: TextView
@@ -60,9 +60,6 @@ class SignupActivity : BaseActivity() {
     private lateinit var phoneInput: EditText
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
-    // Declare a late init variable for the binding
-//    private lateinit var binding: DialogProgressBinding
 
     private lateinit var suggestionsListView: ListView
     private lateinit var api: NominatimApi
@@ -133,6 +130,7 @@ class SignupActivity : BaseActivity() {
         var currentAddress: String
 
         locationIcon.setOnTouchListener() { _, event ->
+            showProgressDialog(resources.getString(R.string.please_wait))
             if (event.action == MotionEvent.ACTION_UP) {
                 // Get the user's current location
                 if (ActivityCompat.checkSelfPermission(
@@ -151,32 +149,38 @@ class SignupActivity : BaseActivity() {
                         ),
                         100
                     )
-                } else {
+                }
+                else {
                     fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                         if (location != null) {
                             val geocoder = Geocoder(this, Locale.getDefault())
-                            val addresses =
-                                geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                            if (addresses.isNotEmpty()) { // Check that the addresses list is not empty
-                                currentAddress = addresses[0].getAddressLine(0)
-                                addressInput.setText(currentAddress)
-                            } else {
-                                // Handle the case where no address is found
+                            try {
+                                val addresses =
+                                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                                if (addresses.isNotEmpty()) { // Check that the addresses list is not empty
+                                    currentAddress = addresses[0].getAddressLine(0)
+                                    addressInput.setText(currentAddress)
+                                } else {
+                                    // Handle the case where no address is found
 
+                                }
+                            }catch (error:Exception){
+                                Toast.makeText(this,"Error to fetch location",Toast.LENGTH_LONG).show()
                             }
                             addressInput.isEnabled = true // Make the EditText editable
-                        } else {
+                        }
+                        else {
                             Toast.makeText(this, "Unable to retrieve address", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }
+
                 }
+                hideProgressDialog()
             }
+            hideProgressDialog()
             true
         }
-
-
-
 
         when(intent.getStringExtra("previousActivity")){
             "RHomePage" -> {
@@ -245,24 +249,25 @@ class SignupActivity : BaseActivity() {
 
             // Use Geocoder to get latitude and longitude from location string
             val geocoder = Geocoder(this)
-            val addresses = geocoder.getFromLocationName(textAddress, 1)
-            val lat = addresses[0].latitude
-            val lng = addresses[0].longitude
+            try {
+                val addresses = geocoder.getFromLocationName(textAddress, 1)
+                val lat = addresses[0].latitude
+                val lng = addresses[0].longitude
 
-            // Save the user's location to Firestore
-            val userLocation = GeoPoint(lat, lng)
+                // Save the user's location to Firestore
+                val userLocation = GeoPoint(lat, lng)
+
 
             if(validateCommonField(textFullName,textEmail,textPassword,textConfirmPwd,textPhone,userLocation)){
-
                 showProgressDialog(resources.getString(R.string.please_wait))
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(textEmail,textPassword).addOnCompleteListener { task ->
                     hideProgressDialog()
                     if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
-                        // Authentication successful, retrieve the user's document from the "users" collection
 
-                        val userId = firebaseUser.uid // Retrieve the user's UID
-                        val userUid = "r23fKsDlCbMnWap4xJZ2FUQmhnq2"
+                        // Authentication successful, retrieve the user's document from the "users" collection
+                        val userUid = firebaseUser.uid // Retrieve the user's UID
+//                        val userUid = "r23fKsDlCbMnWap4xJZ2FUQmhnq2"
                         val registeredEmail = firebaseUser.email!!
 
                         val role = when (intent.getStringExtra("previousActivity")) {
@@ -274,26 +279,44 @@ class SignupActivity : BaseActivity() {
                             // Add cases for other activities
                             else -> "default_role"
                         }
-
                         when (intent.getStringExtra("previousActivity")) {
                             "RHomePage" -> {
                                 textResCuisine =radioButtonResCuisine.text.toString()
                                 textResFoodType = radioButtonResFoodType.text.toString()
                                 textResPickupTime = radioButtonResFoodPickup.text.toString()
                                 // For Restaurant
-                                val restaurantData = RestaurantData(
-                                    name = textFullName,
-                                    email = registeredEmail,
-                                    location = userLocation,
-                                    phone = textPhone,
-                                    restaurantName = textRestaurantName,
-                                    cuisine = textResCuisine!!,
-                                    foodType = textResFoodType!!,
-                                    pickTime = textResPickupTime!!,
-                                    password = textPassword,
-                                    role = role
-                                )
-                                FireStoreClass.registerUser(this,restaurantData,userUid)
+                                FirebaseApp.initializeApp(this)
+                                FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+                                    // Send the token to your server so it can send FCM messages to this app
+
+                                    val restaurantData = RestaurantData(
+                                        id = userUid,
+                                        fcmToken = token,
+                                        name = textFullName,
+                                        email = registeredEmail,
+                                        address = textAddress,
+                                        location = userLocation,
+                                        phone = textPhone,
+                                        restaurantName = textRestaurantName,
+                                        cuisine = textResCuisine!!,
+                                        foodType = textResFoodType!!,
+                                        pickTime = textResPickupTime!!,
+                                        password = textPassword,
+                                        role = role
+                                    )
+//                                FireStoreClass.registerUser(this,restaurantData,userUid)
+                                    FireStoreClass().addUserData(
+                                        "restaurant",
+                                        userUid,
+                                        restaurantData
+                                    ) {
+                                        val rHomeIntent = Intent(this, RHomePage::class.java)
+                                        rHomeIntent.flags =
+                                            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        startActivity(rHomeIntent)
+                                        finish()
+                                    }
+                                }
                             }
 
                             "NHomePage" -> {
@@ -302,7 +325,7 @@ class SignupActivity : BaseActivity() {
                                 textNgoOrganizationType = radioButtonNgoOrganization.text.toString()
                                 textNgoFoodPickup = radioButtonNgoFoodPickup.text.toString()
                                 val ngoData = NgoData(
-                                    ngoId = userId,
+                                    ngoId=userUid,
                                     name = textFullName,
                                     email = textEmail,
                                     location = userLocation,
@@ -316,16 +339,23 @@ class SignupActivity : BaseActivity() {
                                     password = textPassword,
                                     role = role
                                 )
-                                FireStoreClass.registerUser(this,ngoData,userUid)
+//                                FireStoreClass.registerUser(this,ngoData,userUid)
+                                FireStoreClass().addUserData("ngo",userUid,ngoData){
+                                    val nHomeIntent = Intent(this, NHomePage::class.java)
+                                    nHomeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(nHomeIntent)
+                                    finish()
+                                }
                             }
 
                             "ALoginPage" -> {
-
                                 textAdminAccess = radioButtonAdminAccess.text.toString()
                                 // For Admin
                                 val adminData = AdminData(
+                                    id = userUid,
                                     name = textFullName,
                                     email = registeredEmail,
+                                    address = textAddress,
                                     location = userLocation,
                                     phone = textPhone,
                                     designation = textAdminDesignation,
@@ -334,22 +364,36 @@ class SignupActivity : BaseActivity() {
                                     role = role
                                 )
                                 Log.d("adminPage","Admin reached successfully")
-                                FireStoreClass.registerUser(this,adminData,userUid)
+//                                FireStoreClass.registerUser(this,adminData,userUid)
+                                FireStoreClass().addUserData("admin",userUid,adminData){
+                                    Log.d("AdminIntent","Admin Intent Reached Successfully")
+                                    val aHomeIntent = Intent(this, AHomePage::class.java)
+                                    aHomeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(aHomeIntent)
+                                    finish()
+                                }
                             }
 
                             "RcHomePage" -> {
-
                                 // For Receiver
                                 val receiverData = ReceiverData(
+                                    id=userUid,
                                     name = textFullName,
                                     email = textEmail,
+                                    address = textAddress,
                                     location = userLocation,
                                     phone = textPhone,
                                     pickupTime = textRevPickupTime,
                                     password = textPassword,
                                     role = role
                                 )
-                                FireStoreClass.registerUser(this,receiverData,userUid)
+//                                FireStoreClass.registerUser(this,receiverData,userUid)
+                                FireStoreClass().addUserData("receiver",userUid,receiverData){
+                                    val rrHomeIntent = Intent(this, RcHomePage::class.java)
+                                    rrHomeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(rrHomeIntent)
+                                    finish()
+                                }
                             }
 
                             "VHomePage" -> {
@@ -357,8 +401,10 @@ class SignupActivity : BaseActivity() {
                                 textVolPreferences = radioButtonVolPreferences.text.toString()
                                 // For Volunteer
                                 val volunteerData = VolunteerData(
+                                    id = userUid,
                                     name = textFullName,
                                     email = textEmail,
+                                    address = textAddress,
                                     location = userLocation,
                                     phone = textPhone,
                                     availability = textVolAvailability!!,
@@ -366,7 +412,13 @@ class SignupActivity : BaseActivity() {
                                     password = textPassword,
                                     role = role
                                 )
-                                FireStoreClass.registerUser(this,volunteerData,userUid)
+//                                FireStoreClass.registerUser(this,volunteerData,userUid)
+                                FireStoreClass().addUserData("volunteer",userUid,volunteerData){
+                                    val vHomeIntent = Intent(this, VHomePage::class.java)
+                                    vHomeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(vHomeIntent)
+                                    finish()
+                                }
                             }
                         }
                     }
@@ -377,6 +429,15 @@ class SignupActivity : BaseActivity() {
             }
             else{
                 Toast.makeText(this,"Unable to create account",Toast.LENGTH_LONG).show()
+            }
+            }catch (e: Exception) {
+                Log.e(TAG, "Error while getting location from address: ${e.message}")
+                Toast.makeText(
+                    this,
+                    "Please enter correct address or copy your address from google",
+                    Toast.LENGTH_SHORT
+                ).show()
+                // Handle the error as needed
             }
         }
     }
@@ -450,39 +511,6 @@ class SignupActivity : BaseActivity() {
 
             else -> {
                 true
-            }
-        }
-    }
-    fun userRegisteredSuccess(user:String){
-        Toast.makeText(this,"You have successfully registered",Toast.LENGTH_LONG).show()
-        hideProgressDialog()
-        when(user){
-            "restaurant" ->{
-                val rHomeIntent = Intent(this, RHomePage::class.java)
-                startActivity(rHomeIntent)
-                finish()
-            }
-            "ngo" ->{
-                val nHomeIntent = Intent(this, NHomePage::class.java)
-                nHomeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(nHomeIntent)
-                finish()
-            }
-            "admin" ->{
-                Log.d("AdminIntent","Admin Intent Reached Successfully")
-                val aHomeIntent = Intent(this, AHomePage::class.java)
-                startActivity(aHomeIntent)
-                finish()
-            }
-            "receiver" ->{
-                val rrHomeIntent = Intent(this, RcHomePage::class.java)
-                startActivity(rrHomeIntent)
-                finish()
-            }
-            "volunteer" ->{
-                val vHomeIntent = Intent(this, VHomePage::class.java)
-                startActivity(vHomeIntent)
-                finish()
             }
         }
     }

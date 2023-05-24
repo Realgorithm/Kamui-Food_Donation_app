@@ -37,12 +37,17 @@ class EmployeeFragment : Fragment() {
         // Get references to the Add Employee button and the Employee CardView
         val addEmp = view.findViewById<Button>(R.id.add_emp)
         emptyView = view.findViewById(R.id.empty_view)
+
         // Initialize the RecyclerView and the adapter
         recyclerView = view.findViewById(R.id.recycler_view)
+
         // Set the layout manager and the adapter for the RecyclerView
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        FireStoreClass().getAllEmployees {employees ->
+        val currentUserId =FireStoreClass().getCurrentUserID()
+
+        FireStoreClass().getAllEmployees(currentUserId)
+        {employees ->
             employeeAdapter = EmployeeAdapter(ArrayList(employees))
             recyclerView.adapter = employeeAdapter
             if (employees.isNotEmpty()) {

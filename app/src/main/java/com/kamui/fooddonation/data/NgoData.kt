@@ -6,9 +6,13 @@ import com.google.firebase.firestore.GeoPoint
 
 data class NgoData(
     val role: String? ="",
-    val ngoId: String? ="",
+    var ngoId: String? ="",
+    val fcmToken: String? = "",
+    val rewardPoint:String? ="",
+    var imageUri:String? ="",
     val name: String? ="",
     val email: String? ="",
+    val address: String? ="",
     val location: GeoPoint? = null,
     val ngoAddress: String? = "",
     val phone: String? ="",
@@ -22,6 +26,10 @@ data class NgoData(
     ): Parcelable
 {
     constructor(parcel: Parcel):this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -41,8 +49,12 @@ data class NgoData(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(role)
         parcel.writeString(ngoId)
+        parcel.writeString(fcmToken)
+        parcel.writeString(rewardPoint)
+        parcel.writeString(imageUri)
         parcel.writeString(name)
         parcel.writeString(email)
+        parcel.writeString(address)
         parcel.writeValue(location)
         parcel.writeString(ngoAddress)
         parcel.writeString(phone)

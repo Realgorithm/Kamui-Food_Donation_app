@@ -1,6 +1,5 @@
 package com.kamui.fooddonation.restaurant
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +31,7 @@ class HistoryFragment : Fragment() {
         viewPager = view.findViewById(R.id.view_pager)
         tabLayout = view.findViewById(R.id.tab_layout)
 
-        adapter = ViewPagerAdapter2(childFragmentManager, lifecycle);
+        adapter = ViewPagerAdapter2(childFragmentManager, lifecycle)
         viewPager.adapter = adapter
 
         TabLayoutMediator(

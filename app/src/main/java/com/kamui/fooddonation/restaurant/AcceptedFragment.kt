@@ -14,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.volunteer.DonationAdapter
 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="12dp">
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="180dp"
+        android:id="@+id/imageView"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/add_image" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/select_image_button"
+        android:text="@string/add_image"
+        android:contentDescription="@string/add_image" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="8dp"
+        android:text="@string/name"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/et_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:inputType="text"
+        android:hint="@string/name"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/tv_user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="@string/email_id"
+        android:visibility="gone"/>
+    <EditText
+        android:id="@+id/et_user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email_id"
+        android:autofillHints=""
+        tools:ignore="TextFields" />
+
+    <TextView
+        android:id="@+id/tv_user_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="@string/mobile_number"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/et_user_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:inputType="phone"
+        android:hint="@string/mobile_number"
+        android:autofillHints=""/>
+
+    <TextView
+        android:id="@+id/tv_user_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="@string/address"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/address_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_user_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:hint="@string/address"
+            android:inputType="textPostalAddress"
+            android:autofillHints="xyz road" />
+
+        <EditText
+            android:id="@+id/location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:autofillHints=""
+            android:hint="@string/add_image"
+            android:inputType="text" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:layout_margin="16dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="@string/submit" />
+
+</LinearLayout>

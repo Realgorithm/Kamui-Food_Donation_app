@@ -3,7 +3,6 @@ package com.kamui.fooddonation.ngo
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.data.NgoData
-import com.kamui.fooddonation.volunteer.DonationAdapter
 
-class NgoRequestFragment : Fragment() {
+class NgoRequestFragment : BassFragment() {
     private var ngosList= ArrayList<NgoData>()
     private lateinit var ngoAdapter: NgoAdapter
     private lateinit var recyclerView: RecyclerView
@@ -51,7 +50,7 @@ class NgoRequestFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.ngo_request_fragment, container, false)
-
+        showProgressDialog("Fetching Data")
         // Find views by id
         val calendarSpinner = view.findViewById<Spinner>(R.id.calendar_spinner)
         val calendarView = view.findViewById<CalendarView>(R.id.calendar_view)
@@ -113,6 +112,7 @@ class NgoRequestFragment : Fragment() {
                     recyclerView.visibility=View.GONE
                     emptyView.visibility =View.VISIBLE
                 }
+                hideProgressDialog()
             },
             onFailure = { exception ->
                 // Handle the failure case

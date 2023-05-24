@@ -54,7 +54,7 @@
                     android:padding="0dp"
                     android:textStyle="bold"
                     android:background="@drawable/button_bg"
-                    android:text="NGO" />
+                    android:text="@string/ngo" />
 
                 <Button
                     android:id="@+id/button2"
@@ -65,7 +65,7 @@
                     android:textStyle="bold"
                     android:padding="0dp"
                     android:background="@drawable/button_bg"
-                    android:text="Receiver" />
+                    android:text="@string/receiver" />
 
                 <Button
                     android:id="@+id/button3"
@@ -76,7 +76,7 @@
                     android:padding="0dp"
                     android:textStyle="bold"
                     android:background="@drawable/button_bg"
-                    android:text="Volunteer" />
+                    android:text="@string/volunteer" />
 
                 <Button
                     android:id="@+id/button4"
@@ -87,7 +87,7 @@
                     android:textStyle="bold"
                     android:padding="0dp"
                     android:background="@drawable/button_bg"
-                    android:text="Restaurant" />
+                    android:text="@string/restaurant" />
 
                 <Button
                     android:id="@+id/button5"
@@ -98,7 +98,7 @@
                     android:textSize="35sp"
                     android:textStyle="bold"
                     android:background="@drawable/button_bg"
-                    android:text="Admin" />
+                    android:text="@string/admin" />
 
                 <View
                     android:layout_width="0dp"

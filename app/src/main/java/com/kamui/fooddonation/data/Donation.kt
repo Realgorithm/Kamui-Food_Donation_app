@@ -9,6 +9,8 @@ import kotlin.String as String
 
 data class Donation(
     var donationId: String? ="",
+    var imageUri:String? ="",
+    val reward:Int =0,
     val donor: String? ="",
     val donorId: String? ="",
     var donorAddress: String? ="",
@@ -30,6 +32,8 @@ data class Donation(
      constructor(parcel: Parcel) : this(
          parcel.readString(),
          parcel.readString(),
+         parcel.readInt(),
+         parcel.readString(),
          parcel.readString(),
          parcel.readString(),
          parcel.readString(),
@@ -45,11 +49,11 @@ data class Donation(
          parcel.readString(),
          parcel.readString(),
          parcel.readParcelable(Timestamp::class.java.classLoader)
-     ) {
-  }
-
+     )
      override fun writeToParcel(parcel: Parcel, flags: Int) {
          parcel.writeString(donationId)
+         parcel.writeString(imageUri)
+         parcel.writeInt(reward)
          parcel.writeString(donor)
          parcel.writeString(donorId)
          parcel.writeString(donorAddress)

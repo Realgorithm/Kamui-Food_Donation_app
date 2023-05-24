@@ -6,6 +6,15 @@
     android:padding="15dp"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="180dp"
+        android:id="@+id/imageView"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/add_image" />
+
     <TextView
         android:id="@+id/foodNameLabel"
         android:layout_width="wrap_content"
@@ -13,7 +22,7 @@
         android:visibility="gone"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Food Name" />
+        android:text="@string/food_name" />
 
     <EditText
         android:id="@+id/food_name_input"
@@ -22,7 +31,7 @@
         android:inputType="text"
         android:autofillHints=""
         android:layout_marginVertical="12dp"
-        android:hint="Food Name"
+        android:hint="@string/food_name"
         tools:ignore="LabelFor" />
     <TextView
         android:id="@+id/foodTypeLabel"
@@ -31,7 +40,7 @@
         android:visibility="gone"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Food Type" />
+        android:text="@string/food_type" />
 
     <EditText
         android:id="@+id/foodTypeInput"
@@ -40,7 +49,7 @@
         android:inputType="text"
         android:autofillHints=""
         android:layout_marginVertical="12dp"
-        android:hint="Food Type"
+        android:hint="@string/food_type"
         tools:ignore="LabelFor" />
 
     <TextView
@@ -50,7 +59,7 @@
         android:visibility="gone"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Quantity" />
+        android:text="@string/quantity" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -64,7 +73,7 @@
         android:inputType="text"
         android:autofillHints="3"
         android:layout_marginVertical="12dp"
-        android:hint="Quantity"
+        android:hint="@string/quantity"
         tools:ignore="LabelFor" />
 
         <Spinner
@@ -85,7 +94,7 @@
         android:visibility="gone"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Expiry Date" />
+        android:text="@string/expiry_date" />
 
     <EditText
         android:id="@+id/expirationDateInput"
@@ -93,7 +102,7 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:layout_marginVertical="12dp"
-        android:hint="Expiry Date"
+        android:hint="@string/expiry_date"
         android:autofillHints=""
         tools:ignore="LabelFor,TextFields" />
 
@@ -104,6 +113,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Upload" />
+        android:layout_marginVertical="20dp"
+        android:text="@string/upload" />
 
 </LinearLayout>

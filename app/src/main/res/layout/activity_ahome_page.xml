@@ -29,7 +29,7 @@
         android:layout_margin="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Approve Donation" />
+        android:text="@string/approve_donation" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview1"
@@ -57,20 +57,21 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textSize="26sp"
-                    android:text="Restaurant" />
+                    android:text="@string/restaurant" />
 
                 <TextView
+                    android:id="@+id/res_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="34sp"
                     android:layout_margin="10dp"
-                    android:text="3" />
+                    android:text="" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Restaurants have joined us" />
+                    android:text="@string/restaurants_have_joined_us" />
 
             </LinearLayout>
 
@@ -79,7 +80,7 @@
                 android:layout_height="48dp"
                 android:src="@drawable/button_shape"
                 android:layout_gravity="center_vertical"
-                android:contentDescription="TODO" />
+                android:contentDescription="@string/emp_image" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -110,19 +111,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textSize="26sp"
-                    android:text="NGO" />
+                    android:text="@string/ngo" />
 
                 <TextView
+                    android:id="@+id/ngo_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textSize="34sp"
-                    android:text="4" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="NGO's have joined us" />
+                    android:text="@string/ngo_s_have_joined_us" />
 
             </LinearLayout>
 
@@ -131,11 +133,20 @@
                 android:layout_height="48dp"
                 android:src="@drawable/button_shape"
                 android:layout_gravity="center_vertical"
-                android:contentDescription="TODO" />
+                android:contentDescription="@string/add_image" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:layout_margin="16dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="@string/manage_profile" />
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
@@ -144,7 +155,7 @@
         android:layout_margin="16dp"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:text="Sign Out" />
+        android:text="@string/sign_out" />
 
 
 </LinearLayout>

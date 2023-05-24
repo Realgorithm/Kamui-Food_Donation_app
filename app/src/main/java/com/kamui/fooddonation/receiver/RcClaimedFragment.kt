@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.volunteer.DonationAdapter
 
@@ -66,24 +65,5 @@ class RcClaimedFragment : BassFragment() {
         recyclerViewClaimed.adapter = donationListAdapter
 
         return view
-    }
-    private fun getDonationList(status:String) {
-
-        FireStoreClass().listenForDonationUpdates(status,
-            onUpdate = { donations ->
-                // Update the adapter with the new donations data
-//                donationsList.clear()
-                donationsList.addAll(donations)
-                donationListAdapter.updateDonations(donations)
-                Log.d("DonationListUpdate",donationsList.toString())
-
-                hideProgressDialog()
-            },
-            onError = { error ->
-                // Handle the error, for example by displaying an error message
-                Toast.makeText(requireContext(), "Error listening for donation updates", Toast.LENGTH_SHORT).show()
-                Log.e("Firestore", "Error listening for donation updates", error)
-            }
-        )
     }
 }

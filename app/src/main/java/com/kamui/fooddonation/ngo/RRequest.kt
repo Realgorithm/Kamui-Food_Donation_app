@@ -64,9 +64,4 @@ class RRequest : Fragment() {
         return view
     }
 
-//    // Set up the spinner with an adapter and a listener
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//    }
 }

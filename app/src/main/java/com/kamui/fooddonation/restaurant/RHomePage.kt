@@ -25,7 +25,8 @@ class RHomePage : BaseActivity() {
 
         onRestaurantLoginSuccess()
 
-        FireStoreClass().getUserData("restaurant", RestaurantData::class.java){ userData ->
+        val userUid =FireStoreClass().getCurrentUserID()
+        FireStoreClass().getUserData("restaurant", RestaurantData::class.java,userUid){ userData ->
             val restaurantName= userData?.name.toString()
             // Set the title of the activity
             // Set the title and enable the back button
@@ -34,10 +35,10 @@ class RHomePage : BaseActivity() {
             supportActionBar?.setCustomView(R.layout.action_bar_title)
 
             val title = findViewById<TextView>(R.id.action_bar_title)
-            title.text = "Welcome ${restaurantName.toUpperCase(Locale.ROOT)}"
+            title.text = "Welcome ${restaurantName.uppercase(Locale.ROOT)}"
 
             title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-//            supportActionBar?.title = "Welcome ${restaurantName.toUpperCase(Locale.ROOT)}"
+
         }
 
         // Set up the ViewPager to display the restaurant menu items

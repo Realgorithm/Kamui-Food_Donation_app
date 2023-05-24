@@ -4,21 +4,23 @@ package com.kamui.fooddonation.ngo
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.kamui.fooddonation.AccountFragment
 import com.kamui.fooddonation.BaseActivity
+import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.OnboardScreen
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.restaurant.AccountFragment
 
 
 class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener {
@@ -26,7 +28,6 @@ class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener
     // Initialize drawerLayout and navigationView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView:NavigationView
-    private lateinit var profile:ImageView
 
 
     @SuppressLint("MissingInflatedId")
@@ -35,11 +36,9 @@ class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener
         setContentView(R.layout.activity_nhome_page)
 
         onNgoLoginSuccess()
-        // Get the menu item color from resources
-        val menuItemColor = ContextCompat.getColorStateList(this, R.color.red_200)
-        // Get the selected menu item color from resources
-        val selectedMenuItemColor = ContextCompat.getColorStateList(this, R.color.black)
 
+
+        val userUid= FireStoreClass().getCurrentUserID()
         // Set drawerLayout, navigationView using findViewById
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
@@ -47,11 +46,35 @@ class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener
         // Get the header view from the NavigationView
         val headerView = navigationView.getHeaderView(0)
 
+        // Retrieve the user's name and image URI from Firestore
+        FirebaseFirestore.getInstance().collection("users")
+            .document("r23fKsDlCbMnWap4xJZ2FUQmhnq2")
+            .collection("ngo")
+            .document(userUid).get().addOnSuccessListener { documentSnapshot ->
+            val name = documentSnapshot.getString("name")
+            val imageUri = documentSnapshot.getString("imageUri")
+
+            // Get references to the views in the header view
+            val profileImage = headerView.findViewById<ImageView>(R.id.profile_image)
+            val profileName = headerView.findViewById<TextView>(R.id.profile_name)
+
+            // Load the user's image into the ImageView using Glide
+            Glide.with(this).load(imageUri).into(profileImage)
+
+            // Set the user's name in the TextView
+            profileName.text = name
+        }
+
         // Set an OnClickListener on the header view
         headerView.setOnClickListener {
             // Your code here
+            val accountFragment = AccountFragment()
+            val bundle =Bundle()
+            bundle.putString("previousActivity","NHomePage")
+            accountFragment.arguments=bundle
+
             supportFragmentManager.beginTransaction()
-                .replace(R.id.content_frame,AccountFragment())
+                .replace(R.id.content_frame, accountFragment)
                 .commit()
             drawerLayout.closeDrawer(GravityCompat.START)
         }
@@ -86,7 +109,6 @@ class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // Set navigation item selected listener to navigationView
         navigationView.setNavigationItemSelectedListener(this)
-
     }
 
     // Override onOptionsItemSelected to handle drawer open and close actions
@@ -156,6 +178,16 @@ class NHomePage : BaseActivity(),NavigationView.OnNavigationItemSelectedListener
                 startActivity(intent)
                 finish()
             }
+        }
+        if(item.isChecked && !isDarkMode()){
+            val colorStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(android.R.attr.state_checked),
+                    intArrayOf(-android.R.attr.state_checked)
+                ),
+                intArrayOf(Color.BLACK, Color.RED)
+            )
+            navigationView.itemTextColor = colorStateList
         }
         // Close the drawer
         drawerLayout.closeDrawer(GravityCompat.START)

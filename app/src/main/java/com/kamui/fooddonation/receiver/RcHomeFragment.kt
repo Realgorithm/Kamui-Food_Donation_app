@@ -26,7 +26,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.kamui.fooddonation.FireStoreClass
 import com.kamui.fooddonation.R
-import com.kamui.fooddonation.admin.BassFragment
+import com.kamui.fooddonation.BassFragment
 import com.kamui.fooddonation.data.Donation
 import com.kamui.fooddonation.data.ReceiverData
 import com.kamui.fooddonation.volunteer.DonationAdapter
@@ -37,7 +37,6 @@ class RcHomeFragment : BassFragment() {
     private val donationsList = ArrayList<Donation>()
     private lateinit var recyclerViewDonations: RecyclerView
     private lateinit var donationListAdapter: DonationAdapter
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationCallback: LocationCallback? = null
     private lateinit var currentLocation: Location
@@ -104,7 +103,7 @@ class RcHomeFragment : BassFragment() {
                 builder.setMessage("Are you sure you want to claim this donation?")
                 builder.setPositiveButton("Yes") { _, _ ->
                     // Get the current user's display name
-                    FireStoreClass().getUserData("receiver", ReceiverData::class.java) { userData ->
+                    FireStoreClass().getUserData("receiver", ReceiverData::class.java,receiverId) { userData ->
                         val receiverName = userData?.name.toString()
                         val receiverAddress = userData?.location!!
                         // Fetch the address from the latitude and longitude using geocoder

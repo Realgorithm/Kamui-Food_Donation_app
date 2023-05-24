@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,14 +13,14 @@
         android:layout_height="180dp"
         android:id="@+id/imageView"
         android:scaleType="fitXY"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/add_image" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/select_image_button"
-        android:text="Add Image"
-        android:contentDescription="TODO" />
+        android:text="@string/add_image"
+        android:contentDescription="@string/add_image" />
 
     <TextView
         android:id="@+id/tv_food_item"
@@ -30,7 +29,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:layout_marginVertical="8dp"
-        android:text="Employee Name"
+        android:text="@string/employee_name"
         android:visibility="gone"/>
 
     <EditText
@@ -41,7 +40,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:inputType="text"
-        android:hint="Employee Name"
+        android:hint="@string/employee_name"
         android:autofillHints="" />
 
     <TextView
@@ -51,7 +50,7 @@
         android:layout_marginVertical="8dp"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:text="Contact Number"
+        android:text="@string/contact_number"
         android:visibility="gone"/>
     <EditText
         android:id="@+id/et_feed_count"
@@ -61,7 +60,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:inputType="number"
-        android:hint="Contact Number"
+        android:hint="@string/contact_number"
         android:autofillHints=""/>
 
     <Button
@@ -73,6 +72,6 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:backgroundTint="@color/yellow_200"
-        android:text="Update" />
+        android:text="@string/update" />
 
 </LinearLayout>

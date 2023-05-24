@@ -6,8 +6,13 @@ import com.google.firebase.firestore.GeoPoint
 
 data class RestaurantData(
     val role: String? = "",
+    var id: String? ="",
+    val fcmToken: String?="",
+    val rewardPoint:String?="",
     val name: String? = "",
+    var imageUri:String? ="",
     val email: String? = "",
+    val address: String? ="",
     val location: GeoPoint? = null,
     val phone: String? = "",
     val restaurantName: String? = "",
@@ -22,6 +27,11 @@ data class RestaurantData(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readParcelable(GeoPoint::class.java.classLoader),
         parcel.readString(),
         parcel.readString(),
@@ -33,8 +43,13 @@ data class RestaurantData(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(role)
+        parcel.writeString(id)
+        parcel.writeString(fcmToken)
+        parcel.writeString(rewardPoint)
         parcel.writeString(name)
+        parcel.writeString(imageUri)
         parcel.writeString(email)
+        parcel.writeString(address)
         parcel.writeValue(location)
         parcel.writeString(phone)
         parcel.writeString(restaurantName)

@@ -96,14 +96,14 @@
                     android:id="@+id/location_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:autofillHints=""
                     android:background="@drawable/borders"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:padding="10dp"
                     android:layout_marginTop="10dp"
                     android:text=""
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:autofillHints="" />
 
                 <ListView
                     android:id="@+id/suggestions_list_view"
@@ -151,7 +151,9 @@
                         android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
-                        android:hint="Designtion"/>
+                        android:hint="@string/designation"
+                        android:autofillHints=""
+                        android:inputType="text" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -176,7 +178,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Full Access"
+                                android:text="@string/full_access"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_restricted"
@@ -184,7 +186,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Restricted Access"
+                                android:text="@string/restricted_access"
                                 />
                         </RadioGroup>
                     </HorizontalScrollView>
@@ -209,7 +211,8 @@
                         android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:autofillHints="" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -234,7 +237,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Chinese"
+                                android:text="@string/chinese"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_italian"
@@ -242,7 +245,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Italian"
+                                android:text="@string/italian"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_maxican"
@@ -250,7 +253,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Mexican"
+                                android:text="@string/mexican"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_indian"
@@ -258,7 +261,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Indian"
+                                android:text="@string/indian"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_japanese"
@@ -266,7 +269,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Japanese"
+                                android:text="@string/japanese"
                                 />
 
                         </RadioGroup>
@@ -294,7 +297,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Perishable"
+                                android:text="@string/perishable"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_nonperishable"
@@ -302,7 +305,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Non-Perishable"
+                                android:text="@string/non_perishable"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_cooked"
@@ -310,7 +313,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Cooked meals"
+                                android:text="@string/cooked_meals"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_leftover"
@@ -318,7 +321,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Leftover food"
+                                android:text="@string/leftover_food"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_bakery"
@@ -326,7 +329,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Bakery items"
+                                android:text="@string/bakery_items"
                                 />
 
                         </RadioGroup>
@@ -355,7 +358,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Anytime"
+                                android:text="@string/anytime"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_morning"
@@ -363,7 +366,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Morning"
+                                android:text="@string/morning"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_afternoon"
@@ -371,7 +374,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Afternoon"
+                                android:text="@string/afternoon"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_evening"
@@ -379,7 +382,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Evening"
+                                android:text="@string/evening"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_res_night"
@@ -387,7 +390,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Night"
+                                android:text="@string/night"
                                 />
 
                         </RadioGroup>
@@ -413,7 +416,8 @@
                         android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:autofillHints="" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -438,7 +442,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Perishable"
+                                android:text="@string/perishable"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_nonperishable"
@@ -446,7 +450,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Non-Perishable"
+                                android:text="@string/non_perishable"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_cooked"
@@ -454,7 +458,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Cooked meals"
+                                android:text="@string/cooked_meals"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_leftover"
@@ -462,7 +466,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Leftover food"
+                                android:text="@string/leftover_food"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_bakery"
@@ -470,7 +474,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Bakery items"
+                                android:text="@string/bakery_items"
                                 />
 
                         </RadioGroup>
@@ -499,7 +503,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="Non Profit"
+                            android:text="@string/non_profit"
                             />
                         <RadioButton
                             android:id="@+id/radio_community"
@@ -507,7 +511,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Community"
+                            android:text="@string/community"
                             />
                         <RadioButton
                             android:id="@+id/faith_based"
@@ -515,7 +519,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Faith-based"
+                            android:text="@string/faith_based"
                             />
                         <RadioButton
                             android:id="@+id/radio_government"
@@ -523,7 +527,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Government"
+                            android:text="@string/government"
                             />
                         <RadioButton
                             android:id="@+id/radio_international"
@@ -531,7 +535,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="International"
+                            android:text="@string/international"
                             />
 
                     </RadioGroup>
@@ -540,7 +544,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Food Pickup"/>
+                        android:text="@string/food_pickup"/>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -560,7 +564,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Anytime"
+                                android:text="@string/anytime"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_morning"
@@ -568,7 +572,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Morning"
+                                android:text="@string/morning"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_afternoon"
@@ -576,7 +580,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Afternoon"
+                                android:text="@string/afternoon"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_evening"
@@ -584,7 +588,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Evening"
+                                android:text="@string/evening"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_night"
@@ -592,7 +596,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="10dp"
-                                android:text="Night"
+                                android:text="@string/night"
                                 />
 
                         </RadioGroup>
@@ -606,7 +610,9 @@
                         android:background="@drawable/borders"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:hint="NGO's tax ID or registration number"/>
+                        android:hint="@string/ngo_s_tax_id_or_registration_number"
+                        android:autofillHints=""
+                        android:inputType="text" />
 
                 </LinearLayout>
 
@@ -628,7 +634,8 @@
                         android:textColorHint="@color/white"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:autofillHints="" />
 
                 </LinearLayout>
 
@@ -645,7 +652,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Availability"/>
+                        android:text="@string/availability"/>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -657,14 +664,15 @@
                         android:id="@+id/vol_availability_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        tools:ignore="TooManyViews">
 
                         <RadioButton
                             android:id="@+id/radio_weekdays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="Weekdays (Monday-Friday)"
+                            android:text="@string/weekdays_monday_friday"
                             />
                         <RadioButton
                             android:id="@+id/radio_weekends"
@@ -672,7 +680,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Weekends (Saturday-Sunday)"
+                            android:text="@string/weekends_saturday_sunday"
                             />
                         <RadioButton
                             android:id="@+id/radio_vol_evening"
@@ -680,7 +688,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Evenings (5pm-8pm)"
+                            android:text="@string/evenings_5pm_8pm"
                             />
                         <RadioButton
                             android:id="@+id/radio_vol_morning"
@@ -688,7 +696,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Mornings (9am-12pm)"
+                            android:text="@string/mornings_9am_12pm"
                             />
                         <RadioButton
                             android:id="@+id/radio_vol_afternoon"
@@ -696,7 +704,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Afternoons (1pm-4pm)"
+                            android:text="@string/afternoons_1pm_4pm"
                             />
                         <RadioButton
                             android:id="@+id/radio_flexible"
@@ -704,7 +712,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginStart="8dp"
-                            android:text="Flexible"
+                            android:text="@string/flexible"
                             />
 
                     </RadioGroup>
@@ -715,7 +723,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Preferred Type of Volunteering Opportunity"/>
+                        android:text="@string/preferred_type_of_volunteering_opportunity"/>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -734,7 +742,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Event setup and cleanup"
+                                android:text="@string/event_setup_and_cleanup"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_food_prep"
@@ -742,7 +750,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Food preparation and cooking"
+                                android:text="@string/food_preparation_and_cooking"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_serving"
@@ -750,7 +758,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Serving food and drinks"
+                                android:text="@string/serving_food_and_drinks"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_donation"
@@ -758,7 +766,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Donation sorting and packaging"
+                                android:text="@string/donation_sorting_and_packaging"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_fundraising"
@@ -766,7 +774,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Fundraising and outreach"
+                                android:text="@string/fundraising_and_outreach"
                                 />
                             <RadioButton
                                 android:id="@+id/radio_driving"
@@ -774,7 +782,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="8dp"
-                                android:text="Driving and transportation"
+                                android:text="@string/driving_and_transportation"
                                 />
 
                         </RadioGroup>
